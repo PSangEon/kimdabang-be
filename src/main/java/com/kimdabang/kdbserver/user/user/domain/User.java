@@ -23,27 +23,31 @@ public class User extends BaseEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Comment("회원 로그인아이디")
+    @Comment("고객 UUID")
+    @Column(nullable = false, length = 100)
+    private String UUID;
+
+    @Comment("고객 로그인아이디")
     @Column(nullable = false, length = 100)
     private String loginId;
 
-    @Comment("회원 비밀번호")
+    @Comment("고객 비밀번호")
     @Column(nullable = false, length = 100)
     private String password;
 
-    @Comment("회원 이름")
+    @Comment("고객 이름")
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Comment("회원 이메일")
+    @Comment("고객 이메일")
     @Column(nullable = false, length = 100)
     private String email;
 
-    @Comment("회원 전화번호")
+    @Comment("고객 전화번호")
     @Column(nullable = false, length = 30)
     private String phone;
 
-    @Comment("회원 성별")
+    @Comment("고객 성별")
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -52,19 +56,29 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private Boolean solar;
 
-    @Comment("회원 생년월일")
+    @Comment("고객 생년월일")
     @Column(nullable = false, length = 20)
     private Date birth;
 
-    @Comment("회원 닉네임")
+    @Comment("고객 별명")
     @Column(length = 100)
     private String nickname;
+
+    @Comment("고객 등급")
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
+
+    @Comment("고객 별명")
+    @Column(length = 100)
+    private String profileImg;
 
 
 
     @Builder
     public User(
             Long id,
+            String UUID,
             String loginId,
             String password,
             String name,
@@ -73,9 +87,12 @@ public class User extends BaseEntity implements UserDetails {
             Gender gender,
             Boolean solar,
             Date birth,
-            String nickname
+            String nickname,
+            Grade grade,
+            String profileImg
     ) {
         this.id = id;
+        this.UUID = UUID;
         this.loginId = loginId;
         this.password = password;
         this.name = name;
@@ -85,7 +102,8 @@ public class User extends BaseEntity implements UserDetails {
         this.solar = solar;
         this.birth = birth;
         this.nickname = nickname;
-
+        this.grade = grade;
+        this.profileImg = profileImg;
     }
 
     public void hashPassword(String password) {
