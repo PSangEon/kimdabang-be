@@ -57,7 +57,7 @@ public class AuthServiceImpl implements AuthService{
            return SignInResponseDto.builder()
                         .accessToken(createToken(authentication))
                         .name(user.getName())
-                        .uuid(String.valueOf(user.getUuid())).build();
+                        .uuid(user.getUuid()).build();
         } catch (Exception e) {
             throw new IllegalArgumentException("로그인 실패");
         }

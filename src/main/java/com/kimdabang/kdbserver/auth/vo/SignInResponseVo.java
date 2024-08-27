@@ -2,6 +2,8 @@ package com.kimdabang.kdbserver.auth.vo;
 
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @Builder
@@ -12,6 +14,6 @@ public class SignInResponseVo {
     private String accessToken;
 //    private String refreshToken;
     private String name;
-    private String uuid;
+    private UUID uuid;
 
 }
