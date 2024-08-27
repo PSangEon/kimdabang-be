@@ -1,11 +1,13 @@
 package com.kimdabang.kdbserver.auth.application;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.kimdabang.kdbserver.auth.dto.SignInRequestDto;
 import com.kimdabang.kdbserver.auth.dto.SignInResponseDto;
 import com.kimdabang.kdbserver.auth.dto.SignUpRequestDto;
 import com.kimdabang.kdbserver.auth.infrastructure.AuthRepository;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.user.user.domain.User;
+import jakarta.persistence.PrePersist;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +15,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ public class AuthServiceImpl implements AuthService{
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public void signUp(SignUpRequestDto signUpRequestDto) {
@@ -40,7 +45,7 @@ public class AuthServiceImpl implements AuthService{
         User user = authRepository.findByLoginId(signInRequestDto.getLoginId()).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디를 가진 회원이 없습니다.")
         );
-        log.info("member : {}", user);
+        log.info("user : {}", user);
 
         try {
            Authentication authentication = authenticationManager.authenticate(
@@ -52,11 +57,12 @@ public class AuthServiceImpl implements AuthService{
            return SignInResponseDto.builder()
                         .accessToken(createToken(authentication))
                         .name(user.getName())
-                        .uuid("uuid").build();
+                        .uuid(String.valueOf(user.getUuid())).build();
         } catch (Exception e) {
             throw new IllegalArgumentException("로그인 실패");
         }
     }
+
 
     private String createToken(Authentication authentication) {
         return jwtTokenProvider.generateAccessToken(authentication);

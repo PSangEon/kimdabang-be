@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
         log.info("getUserr : {}", getUser);
         UserSignUpDto userSignUpDto = UserSignUpDto.builder()
                 .id(getUser.getId())
-                .UUID(getUser.getUUID())
+                .uuid(getUser.getUuid())
                 .loginId(getUser.getLoginId())
                 .password(getUser.getPassword())
                 .name(getUser.getName())
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService{
         if (user != null) {
             UserSignUpDto userSignUpDto = UserSignUpDto.builder()
                     .id(user.getId())
-                    .UUID(user.getUUID())
+                    .uuid(user.getUuid())
                     .loginId(user.getLoginId())
                     .password(user.getPassword())
                     .name(user.getName())

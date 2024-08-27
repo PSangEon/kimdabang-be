@@ -11,6 +11,7 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ import java.util.Date;
 public class UserSignUpDto {
 
     private Long id;
-    private String UUID;
+    private UUID uuid;
     private String loginId;
     private String password;
     private String name;
@@ -37,7 +38,7 @@ public class UserSignUpDto {
     public User toEntity() {
         return User.builder()
                 .id(id)
-                .UUID(UUID)
+                .uuid(uuid)
                 .loginId(loginId)
                 .password(password)
                 .name(name)
@@ -55,7 +56,7 @@ public class UserSignUpDto {
     public UserResponseVo toResponseVo() {
         return UserResponseVo.builder()
                 .id(id)
-                .UUID(UUID)
+                .uuid(uuid)
                 .loginId(loginId)
                 .password(password)
                 .name(name)

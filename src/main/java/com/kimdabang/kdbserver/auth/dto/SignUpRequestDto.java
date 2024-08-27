@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -31,6 +32,7 @@ public class SignUpRequestDto {
     public User toEntity(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .loginId(loginId)
+                .uuid(UUID.randomUUID())
                 .password(passwordEncoder.encode(password))
                 .name(name)
                 .email(email)

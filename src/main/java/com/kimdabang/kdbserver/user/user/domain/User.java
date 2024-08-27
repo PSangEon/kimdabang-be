@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Entity
@@ -24,8 +26,8 @@ public class User extends BaseEntity implements UserDetails {
     private Long id;
 
     @Comment("고객 UUID")
-    @Column(nullable = false, length = 100)
-    private String UUID;
+    @Column(columnDefinition = "BINARY(16)",nullable = false, updatable = false)
+    private UUID uuid;
 
     @Comment("고객 로그인아이디")
     @Column(nullable = false, length = 100)
@@ -78,8 +80,8 @@ public class User extends BaseEntity implements UserDetails {
     @Builder
     public User(
             Long id,
-            String UUID,
             String loginId,
+            UUID uuid,
             String password,
             String name,
             String email,
@@ -92,8 +94,8 @@ public class User extends BaseEntity implements UserDetails {
             String profileImg
     ) {
         this.id = id;
-        this.UUID = UUID;
         this.loginId = loginId;
+        this.uuid = uuid;
         this.password = password;
         this.name = name;
         this.email = email;

@@ -5,6 +5,7 @@ import com.kimdabang.kdbserver.user.user.domain.Grade;
 import lombok.*;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @ToString
@@ -14,7 +15,7 @@ import java.util.Date;
 public class UserResponseVo {
 
     private Long id;
-    private String UUID;
+    private UUID uuid;
     private String loginId;
     private String password;
     private String name;
