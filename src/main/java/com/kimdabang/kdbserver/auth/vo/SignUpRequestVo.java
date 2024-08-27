@@ -21,6 +21,4 @@ public class SignUpRequestVo {
     private Boolean solar;
     private Date birth;
     private String nickname;
-    private Grade grade;
-    private String profileImg;
 }

@@ -26,8 +26,6 @@ public class SignUpRequestDto {
     private Boolean solar;
     private Date birth;
     private String nickname;
-    private Grade grade;
-    private String profileImg;
 
     public User toEntity(PasswordEncoder passwordEncoder) {
         return User.builder()
@@ -41,8 +39,8 @@ public class SignUpRequestDto {
                 .solar(solar)
                 .birth(birth)
                 .nickname(nickname)
-                .grade(grade)
-                .profileImg(profileImg)
+                .grade(Grade.GRADE_WELCOME)
+                .profileImg("기본이미지URL")
                 .build();
     }
 
