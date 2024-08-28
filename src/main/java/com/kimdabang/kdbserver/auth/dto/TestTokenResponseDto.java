@@ -11,15 +11,6 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignInResponseDto {
-
-    private String accessToken;
-//    private String refreshToken;
-//    private String name;
-//    private UUID uuid;
-
-//    todo : to vo SignInResponseVo
-
-
-
+public class TestTokenResponseDto {
+    private UUID uuid;
 }

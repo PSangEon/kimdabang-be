@@ -1,18 +1,13 @@
 package com.kimdabang.kdbserver.auth.application;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.kimdabang.kdbserver.auth.dto.SignInRequestDto;
-import com.kimdabang.kdbserver.auth.dto.SignInResponseDto;
-import com.kimdabang.kdbserver.auth.dto.SignUpRequestDto;
+import com.kimdabang.kdbserver.auth.dto.*;
 import com.kimdabang.kdbserver.auth.infrastructure.AuthRepository;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.user.user.domain.User;
-import jakarta.persistence.PrePersist;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,24 +43,33 @@ public class AuthServiceImpl implements AuthService{
         log.info("user : {}", user);
 
         try {
-           Authentication authentication = authenticationManager.authenticate(
+           //Authentication authentication =
+                   authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getUsername(),
                             signInRequestDto.getPassword()
                     )
            );
            return SignInResponseDto.builder()
-                        .accessToken(createToken(authentication))
-                        .name(user.getName())
-                        .uuid(user.getUuid()).build();
+                        .accessToken(createToken(user.getUuid()))
+                        .build();
         } catch (Exception e) {
             throw new IllegalArgumentException("로그인 실패");
         }
     }
-
-
-    private String createToken(Authentication authentication) {
-        return jwtTokenProvider.generateAccessToken(authentication);
+    @Override
+    public TestTokenResponseDto testToken(TestTokenRequestDto testTokenRequestDto) {
+        UUID uuid = jwtTokenProvider.useToken(testTokenRequestDto);
+        TestTokenResponseDto testTokenResponseDto = TestTokenResponseDto.builder()
+                .uuid(uuid).build();
+        return testTokenResponseDto;
     }
+
+    private String createToken(UUID uuid) {
+        //return jwtTokenProvider.generateAccessToken(authentication, uuid);
+        return jwtTokenProvider.generateAccessToken(uuid);
+    }
+
+
 
 }
