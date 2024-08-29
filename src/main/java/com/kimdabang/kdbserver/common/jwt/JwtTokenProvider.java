@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.UUID;
 
@@ -41,17 +41,17 @@ public class JwtTokenProvider {
         try {
             // Jwts.parserBuilder()로 파서를 생성하고 서명 키를 설정합니다.
             return Jwts.parser()
-                    .setSigningKey(getSignKey())  // 서명 키를 설정하여 토큰을 검증합니다.
+                    .verifyWith(getSignKey())
                     .build()
-                    .parseClaimsJws(token)        // 토큰을 파싱하고 검증하여 클레임을 추출합니다.
-                    .getBody();                   // 추출된 클레임 반환
+                    .parseSignedClaims(token)
+                    .getPayload();                   // 추출된 클레임 반환
         } catch (JwtException | IllegalArgumentException e) {
             // 토큰이 유효하지 않거나 만료된 경우 예외 처리
             throw new RuntimeException("Invalid or expired JWT token", e);
         }
     }
-    public UUID useToken(TestTokenRequestDto testTokenRequestDto) {
-        Claims claims = parseToken(testTokenRequestDto.getAccessToken());          // 토큰에서 클레임을 추출합니다.
+    public UUID useToken(String accessToken) {
+        Claims claims = parseToken(accessToken);          // 토큰에서 클레임을 추출합니다.
         String uuidString = claims.get("uuid", String.class);
         UUID uuid = UUID.fromString(uuidString);
         Date issuedAt = claims.getIssuedAt();
@@ -59,7 +59,7 @@ public class JwtTokenProvider {
         return uuid;
     }
 
-    public Key getSignKey() {
+    public SecretKey getSignKey() {
         return Keys.hmacShaKeyFor( env.getProperty("jwt.secret-key").getBytes() );
     }
 

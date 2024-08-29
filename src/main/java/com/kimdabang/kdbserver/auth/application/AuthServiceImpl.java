@@ -59,10 +59,9 @@ public class AuthServiceImpl implements AuthService{
     }
     @Override
     public TestTokenResponseDto testToken(TestTokenRequestDto testTokenRequestDto) {
-        UUID uuid = jwtTokenProvider.useToken(testTokenRequestDto);
-        TestTokenResponseDto testTokenResponseDto = TestTokenResponseDto.builder()
+        UUID uuid = jwtTokenProvider.useToken(testTokenRequestDto.getAccessToken());
+        return TestTokenResponseDto.builder()
                 .uuid(uuid).build();
-        return testTokenResponseDto;
     }
 
     private String createToken(UUID uuid) {
