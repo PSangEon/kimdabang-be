@@ -9,5 +9,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserStarRepository extends JpaRepository<UserStar, Long> {
-    Optional<UserStar> findByUuid(UUID uuid);
+    List<UserStar> findByUuid(UUID uuid);
 }

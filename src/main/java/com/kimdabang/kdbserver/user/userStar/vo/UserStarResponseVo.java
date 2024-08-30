@@ -13,4 +13,6 @@ public class UserStarResponseVo {
     private Date expirationDate;
     private Date createdAt;
     private Boolean isEcho;
+    private Integer starAmount;
+    private String description;
 }

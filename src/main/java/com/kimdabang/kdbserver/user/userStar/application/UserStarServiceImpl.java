@@ -22,31 +22,34 @@ public class UserStarServiceImpl implements UserStarService{
     private final UserStarRepository userStarRepository;
 
 
+//    @Override
+//    public UserStarResponseDto getUserStar(UserStarRequestDto userStarRequestDto) {
+//        UUID uuid = jwtTokenProvider.useToken(userStarRequestDto.getAccessToken());
+//        UserStar getUserstar = userStarRepository.findByUuid(uuid).orElseThrow(
+//                () -> new IllegalArgumentException("적립된 별이 없습니다."));
+//        UserStarResponseDto userStarResponseDto = UserStarResponseDto.builder()
+//                .expirationDate(getUserstar.getExpirationDate())
+//                .createdAt(getUserstar.getCreatedAt())
+//                .isEcho(getUserstar.getIsEcho())
+//                .build();
+//        log.info("userStarResponseDto: {}", userStarResponseDto);
+//        return userStarResponseDto;
+//    }
     @Override
-    public UserStarResponseDto getUserStar(UserStarRequestDto userStarRequestDto) {
+    public List<UserStarResponseDto> getUserStar(UserStarRequestDto userStarRequestDto) {
         UUID uuid = jwtTokenProvider.useToken(userStarRequestDto.getAccessToken());
-        UserStar getUserstar = userStarRepository.findByUuid(uuid).orElseThrow(
-                () -> new IllegalArgumentException("적립된 별이 없습니다."));
-        UserStarResponseDto userStarResponseDto = UserStarResponseDto.builder()
-                .expirationDate(getUserstar.getExpirationDate())
-                .createdAt(getUserstar.getCreatedAt())
-                .isEcho(getUserstar.getIsEcho())
-                .build();
-        log.info("userStarResponseDto: {}", userStarResponseDto);
-        return userStarResponseDto;
-    }
-    @Override
-    public List<UserStarResponseDto> getUserStars(UserStarRequestDto userStarRequestDto) {
-        List<UserStar> userStars = userStarRepository.findAll();
+        List<UserStar> userStars = userStarRepository.findByUuid(uuid);
         if (userStars != null) {
             return userStars.stream()
                     .map(userStar -> UserStarResponseDto.builder()
                             .expirationDate(userStar.getExpirationDate())
                             .createdAt(userStar.getCreatedAt())
                             .isEcho(userStar.getIsEcho())
+                            .starAmount(1)
                             .build())
                     .toList();
         }
+        else {new IllegalArgumentException("적립된 별이 없습니다.");}
         return List.of();
     }
     @Override

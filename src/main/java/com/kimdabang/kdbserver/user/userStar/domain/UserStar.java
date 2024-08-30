@@ -44,6 +44,10 @@ public class UserStar {
     @Column(nullable = true)
     private Date usedAt;
 
+    @Comment("적립 경로")
+    @Column(nullable = false, length = 100)
+    private String description;
+
     @Builder
     public UserStar(
             Long id,
@@ -52,7 +56,8 @@ public class UserStar {
             Boolean isEcho,
             UUID uuid,
             Boolean isUsed,
-            Date usedAt
+            Date usedAt,
+            String description
 
     ) {
         this.id = id;
@@ -62,6 +67,7 @@ public class UserStar {
         this.uuid = uuid;
         this.isUsed = isUsed;
         this.usedAt = usedAt;
+        this.description = description;
     }
 }
 

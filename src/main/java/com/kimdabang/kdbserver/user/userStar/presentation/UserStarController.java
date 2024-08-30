@@ -1,9 +1,5 @@
 package com.kimdabang.kdbserver.user.userStar.presentation;
 
-import com.kimdabang.kdbserver.auth.dto.SignInRequestDto;
-import com.kimdabang.kdbserver.auth.dto.SignUpRequestDto;
-import com.kimdabang.kdbserver.auth.vo.SignInResponseVo;
-import com.kimdabang.kdbserver.auth.vo.SignUpRequestVo;
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
 import com.kimdabang.kdbserver.common.entity.CommonResponseMessage;
 import com.kimdabang.kdbserver.user.userStar.application.UserStarService;
@@ -38,11 +34,11 @@ public class UserStarController {
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
     @Operation(summary = "UserStarGet API", description = "userStarGet API 입니다.", tags = {"Auth"})
-    @PostMapping("/get-star")
+    @PostMapping("/get-userstar")
     public CommonResponseEntity<List<UserStarResponseVo>> getUserStar(
             @RequestBody UserStarRequestVo userStarRequestVo) {
         List<UserStarResponseDto> userStarResponseDtoList =
-                userStarService.getUserStars(new ModelMapper().map(userStarRequestVo, UserStarRequestDto.class));
+                userStarService.getUserStar(new ModelMapper().map(userStarRequestVo, UserStarRequestDto.class));
         return new CommonResponseEntity<>(
                 HttpStatus.OK,
                 "userStar 조회 성공",
