@@ -49,7 +49,7 @@ public class UserStarServiceImpl implements UserStarService{
                             .build())
                     .toList();
         }
-        else {new IllegalArgumentException("적립된 별이 없습니다.");}
+        //else {new IllegalArgumentException("적립된 별이 없습니다.");}
         return List.of();
     }
     @Override

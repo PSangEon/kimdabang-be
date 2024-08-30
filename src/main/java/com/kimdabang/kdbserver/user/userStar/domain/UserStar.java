@@ -41,7 +41,6 @@ public class UserStar {
     private Boolean isUsed;
 
     @Comment("사용 일자")
-    @Column(nullable = true)
     private Date usedAt;
 
     @Comment("적립 경로")

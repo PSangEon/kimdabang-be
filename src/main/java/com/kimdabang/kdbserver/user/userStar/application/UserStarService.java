@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface UserStarService {
     List<UserStarResponseDto> getUserStar(UserStarRequestDto userStarRequestDto);
-    public void addUserStar(TestUserStarRequestDto testUserStarRequestDto);
+    void addUserStar(TestUserStarRequestDto testUserStarRequestDto);
 }
