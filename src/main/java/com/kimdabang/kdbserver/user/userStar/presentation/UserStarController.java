@@ -3,10 +3,10 @@ package com.kimdabang.kdbserver.user.userStar.presentation;
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
 import com.kimdabang.kdbserver.common.entity.CommonResponseMessage;
 import com.kimdabang.kdbserver.user.userStar.application.UserStarService;
-import com.kimdabang.kdbserver.user.userStar.dto.TestUserStarRequestDto;
+import com.kimdabang.kdbserver.user.userStar.dto.UserStarCreateRequestDto;
 import com.kimdabang.kdbserver.user.userStar.dto.UserStarRequestDto;
 import com.kimdabang.kdbserver.user.userStar.dto.UserStarResponseDto;
-import com.kimdabang.kdbserver.user.userStar.vo.TestUserStarRequestVo;
+import com.kimdabang.kdbserver.user.userStar.vo.UserStarCreateRequestVo;
 import com.kimdabang.kdbserver.user.userStar.vo.UserStarRequestVo;
 import com.kimdabang.kdbserver.user.userStar.vo.UserStarResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,11 +26,11 @@ public class UserStarController {
 
     private final UserStarService userStarService;
 
-    @Operation(summary = "UserStarAddTest API", description = "userStarAddTest API 입니다.", tags = {"Auth"})
-    @PostMapping("/add-star")
+    @Operation(summary = "UserStarAddTest API", description = "userStarAdd API 입니다.", tags = {"Auth"})
+    @PostMapping("/add-userstar")
     public CommonResponseEntity<Void> addUserStar(
-            @RequestBody TestUserStarRequestVo testUserStarRequestVo) {
-        userStarService.addUserStar(new ModelMapper().map(testUserStarRequestVo, TestUserStarRequestDto.class));
+            @RequestBody UserStarCreateRequestVo userStarCreateRequestVo) {
+        userStarService.createUserStar(new ModelMapper().map(userStarCreateRequestVo, UserStarCreateRequestDto.class));
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
     @Operation(summary = "UserStarGet API", description = "userStarGet API 입니다.", tags = {"Auth"})
