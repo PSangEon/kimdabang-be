@@ -26,7 +26,7 @@ public class UserStarController {
 
     private final UserStarService userStarService;
 
-    @Operation(summary = "UserStarAddTest API", description = "userStarAdd API 입니다.", tags = {"Auth"})
+    @Operation(summary = "UserStarAdd API", description = "userStarAdd API 입니다.", tags = {"Auth"})
     @PostMapping("/add-userstar")
     public CommonResponseEntity<Void> addUserStar(
             @RequestBody UserStarCreateRequestVo userStarCreateRequestVo) {
