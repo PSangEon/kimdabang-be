@@ -13,7 +13,7 @@ public class SignInResponseVo {
 
     private String accessToken;
 //    private String refreshToken;
-    private String name;
-    private UUID uuid;
+//    private String name;
+//    private UUID uuid;
 
 }
