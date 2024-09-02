@@ -7,7 +7,7 @@ import java.util.Date;
 
 @ToString
 @Getter
-public class UserStarCreateRequestVo {
+public class UserStarAddRequestVo {
     private String accesstoken;
     private Date expirationDate;
     private String description;

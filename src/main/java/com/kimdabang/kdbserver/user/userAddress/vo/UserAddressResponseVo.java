@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserAddressResponseVo {
+    private Long id;
     private String address;
     private Boolean isDefault;
     private String addressName;

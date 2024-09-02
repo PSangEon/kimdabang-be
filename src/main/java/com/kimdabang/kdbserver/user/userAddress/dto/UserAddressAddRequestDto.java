@@ -9,17 +9,17 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAddressCreateRequestDto {
+public class UserAddressAddRequestDto {
     private String address;
     private Boolean isDefault;
     private String addressName;
     private String accessToken;
 
-    public UserAddress toEntity(UserAddressCreateRequestDto userAddressCreateRequestDto, User user) {
+    public UserAddress toEntity(UserAddressAddRequestDto userAddressAddRequestDto, User user) {
         return UserAddress.builder()
-                .address(userAddressCreateRequestDto.getAddress())
-                .isDefault(userAddressCreateRequestDto.getIsDefault())
-                .addressName(userAddressCreateRequestDto.getAddressName())
+                .address(userAddressAddRequestDto.getAddress())
+                .isDefault(userAddressAddRequestDto.getIsDefault())
+                .addressName(userAddressAddRequestDto.getAddressName())
                 .user(user)
                 .build();
     }
