@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public class UserAddressCreateRequestVo {
+public class UserAddressAddRequestVo {
     private String address;
     private Boolean isDefault;
     private String addressName;
