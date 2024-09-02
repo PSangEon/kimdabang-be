@@ -1,5 +1,6 @@
 package com.kimdabang.kdbserver.product.media.application;
 
+import com.kimdabang.kdbserver.product.media.domain.ProductMedia;
 import com.kimdabang.kdbserver.product.media.dto.in.ProductMediaRequestDto;
 import com.kimdabang.kdbserver.product.media.infrastructure.ProductMediaRepository;
 import com.kimdabang.kdbserver.product.product.domain.Product;
@@ -34,5 +35,12 @@ public class ProductMediaServiceImpl implements ProductMediaService {
 
         productMediaRepository.save(productDto.toProductMediaEntity(product));
 
+    }
+
+    @Override
+    public void deleteProductMedia(Long productId) {
+        ProductMedia deleteProductMedia = productMediaRepository.findByProductId(productId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품 미디어가 존재하지 않습니다."));
+        productMediaRepository.delete(deleteProductMedia);
     }
 }
