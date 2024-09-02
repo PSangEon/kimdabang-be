@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface ProductMediaRepository extends JpaRepository<ProductMedia, Long> {
 
     Optional<ProductMedia> findById(Long productMediaId);
-    List<ProductMedia> findByProductId(Long productId);
+    Optional<ProductMedia> findByProductId(Long productId);
+    List<ProductMedia> findAllByProductId(Long productId);
 
 }

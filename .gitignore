@@ -35,4 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### .yaml files ###
+*.yaml
+*.yml
 /src/main/resources/application.yaml

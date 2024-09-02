@@ -21,7 +21,7 @@ public class ProductMedia extends BaseEntity {
     private Long id;
     @Comment("상품 pk")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
     @Comment("미디어 경로 URL")
     @Column(nullable = false)

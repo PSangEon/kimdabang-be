@@ -24,4 +24,15 @@ public class ProductMediaServiceImpl implements ProductMediaService {
 
         productMediaRepository.save(productDto.toProductMediaEntity(product));
     }
+
+    @Override
+    public void updateProductMedia(ProductMediaRequestDto productDto) {
+        Product product = productRepository.findById(productDto.getProductId())
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id " + productDto.getProductId()));
+        productMediaRepository.findByProductId(productDto.getProductId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품 미디어가 존재하지 않습니다."));
+
+        productMediaRepository.save(productDto.toProductMediaEntity(product));
+
+    }
 }
