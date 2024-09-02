@@ -9,7 +9,7 @@ public interface ProductMediaService {
 
     void addProductMedia(ProductMediaRequestDto productMediaDto);
     void updateProductMedia(ProductMediaRequestDto productMediaDto);
-    void deleteProductMedia(Long productMediaId);
-    ProductMediaResponseDto getProductMedia(Long productMediaId);
-    List<ProductMediaResponseDto> getAllProductMedia(Long productId);
+    void deleteProductMedia(String productMediaId);
+    ProductMediaResponseDto getProductMedia(String productMediaId);
+    List<ProductMediaResponseDto> getAllProductMedia(String productId);
 }

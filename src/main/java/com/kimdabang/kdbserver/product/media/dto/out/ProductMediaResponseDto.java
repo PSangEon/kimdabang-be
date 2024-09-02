@@ -13,7 +13,7 @@ public class ProductMediaResponseDto {
     private String mediaType;
     private String mediaURL;
 
-    private ProductMediaResponseVo toProductMediaResponseVo() {
+    public ProductMediaResponseVo toProductMediaResponseVo() {
         return ProductMediaResponseVo.builder()
                 .id(id)
                 .productId(productId)

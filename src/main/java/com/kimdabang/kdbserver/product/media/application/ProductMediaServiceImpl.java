@@ -41,15 +41,17 @@ public class ProductMediaServiceImpl implements ProductMediaService {
     }
 
     @Override
-    public void deleteProductMedia(Long productMediaId) {
-        ProductMedia deleteProductMedia = productMediaRepository.findById(productMediaId)
+    public void deleteProductMedia(String productMediaId) {
+        Long longProductMediaId = Long.parseLong(productMediaId);
+        ProductMedia deleteProductMedia = productMediaRepository.findById(longProductMediaId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품 미디어가 존재하지 않습니다."));
         productMediaRepository.delete(deleteProductMedia);
     }
 
     @Override
-    public ProductMediaResponseDto getProductMedia(Long productMediaId) {
-        ProductMedia getProductMedia = productMediaRepository.findById(productMediaId)
+    public ProductMediaResponseDto getProductMedia(String productMediaId) {
+        Long longProductMediaId = Long.parseLong(productMediaId);
+        ProductMedia getProductMedia = productMediaRepository.findById(longProductMediaId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품 미디어가 존재하지 않습니다."));
 
         return ProductMediaResponseDto.builder()
@@ -62,13 +64,14 @@ public class ProductMediaServiceImpl implements ProductMediaService {
     }
 
     @Override
-    public List<ProductMediaResponseDto> getAllProductMedia(Long productId) {
-        List<ProductMedia> productMediaList = productMediaRepository.findAllByProductId(productId);
+    public List<ProductMediaResponseDto> getAllProductMedia(String productId) {
+        Long longProductId = Long.parseLong(productId);
+        List<ProductMedia> productMediaList = productMediaRepository.findAllByProductId(longProductId);
         if (productMediaList != null) {
             return productMediaList.stream()
                     .map(productMedia -> ProductMediaResponseDto.builder()
                             .id(productMedia.getId())
-                            .productId(productId)
+                            .productId(longProductId)
                             .mediaName(productMedia.getMediaName())
                             .mediaType(productMedia.getMediaType())
                             .mediaURL(productMedia.getMediaURL())
