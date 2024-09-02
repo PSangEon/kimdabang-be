@@ -2,6 +2,7 @@ package com.kimdabang.kdbserver.product.media.application;
 
 import com.kimdabang.kdbserver.product.media.domain.ProductMedia;
 import com.kimdabang.kdbserver.product.media.dto.in.ProductMediaRequestDto;
+import com.kimdabang.kdbserver.product.media.dto.out.ProductMediaResponseDto;
 import com.kimdabang.kdbserver.product.media.infrastructure.ProductMediaRepository;
 import com.kimdabang.kdbserver.product.product.domain.Product;
 import com.kimdabang.kdbserver.product.product.infrastructure.ProductRepository;
@@ -38,9 +39,23 @@ public class ProductMediaServiceImpl implements ProductMediaService {
     }
 
     @Override
-    public void deleteProductMedia(Long productId) {
-        ProductMedia deleteProductMedia = productMediaRepository.findByProductId(productId)
+    public void deleteProductMedia(Long productMediaId) {
+        ProductMedia deleteProductMedia = productMediaRepository.findById(productMediaId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품 미디어가 존재하지 않습니다."));
         productMediaRepository.delete(deleteProductMedia);
+    }
+
+    @Override
+    public ProductMediaResponseDto getProductMedia(Long productMediaId) {
+        ProductMedia getProductMedia = productMediaRepository.findById(productMediaId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품 미디어가 존재하지 않습니다."));
+
+        return ProductMediaResponseDto.builder()
+                .id(getProductMedia.getId())
+                .productId(getProductMedia.getProduct().getId())
+                .mediaName(getProductMedia.getMediaName())
+                .mediaType(getProductMedia.getMediaType())
+                .mediaURL(getProductMedia.getMediaURL())
+                .build();
     }
 }
