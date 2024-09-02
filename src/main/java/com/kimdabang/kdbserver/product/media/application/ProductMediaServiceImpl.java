@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -57,5 +59,22 @@ public class ProductMediaServiceImpl implements ProductMediaService {
                 .mediaType(getProductMedia.getMediaType())
                 .mediaURL(getProductMedia.getMediaURL())
                 .build();
+    }
+
+    @Override
+    public List<ProductMediaResponseDto> getAllProductMedia(Long productId) {
+        List<ProductMedia> productMediaList = productMediaRepository.findAllByProductId(productId);
+        if (productMediaList != null) {
+            return productMediaList.stream()
+                    .map(productMedia -> ProductMediaResponseDto.builder()
+                            .id(productMedia.getId())
+                            .productId(productId)
+                            .mediaName(productMedia.getMediaName())
+                            .mediaType(productMedia.getMediaType())
+                            .mediaURL(productMedia.getMediaURL())
+                            .build())
+                    .toList();
+        }
+        return List.of();
     }
 }

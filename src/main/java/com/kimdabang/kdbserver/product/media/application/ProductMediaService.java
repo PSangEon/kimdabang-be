@@ -11,5 +11,5 @@ public interface ProductMediaService {
     void updateProductMedia(ProductMediaRequestDto productMediaDto);
     void deleteProductMedia(Long productMediaId);
     ProductMediaResponseDto getProductMedia(Long productMediaId);
-//    List<ProductMediaResponseDto> getAllProductMedia();
+    List<ProductMediaResponseDto> getAllProductMedia(Long productId);
 }

@@ -14,6 +14,7 @@ import org.hibernate.annotations.Comment;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "product_media")
 public class ProductMedia extends BaseEntity {
 
     @Id
