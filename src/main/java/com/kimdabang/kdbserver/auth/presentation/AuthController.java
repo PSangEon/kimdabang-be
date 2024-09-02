@@ -1,11 +1,10 @@
 package com.kimdabang.kdbserver.auth.presentation;
 
 import com.kimdabang.kdbserver.auth.application.AuthService;
+import com.kimdabang.kdbserver.auth.dto.TestTokenRequestDto;
 import com.kimdabang.kdbserver.auth.dto.SignInRequestDto;
 import com.kimdabang.kdbserver.auth.dto.SignUpRequestDto;
-import com.kimdabang.kdbserver.auth.vo.SignInRequestVo;
-import com.kimdabang.kdbserver.auth.vo.SignInResponseVo;
-import com.kimdabang.kdbserver.auth.vo.SignUpRequestVo;
+import com.kimdabang.kdbserver.auth.vo.*;
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
 import com.kimdabang.kdbserver.common.entity.CommonResponseMessage;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,8 +25,8 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @Operation(summary = "SignIn API", description = "SignIn API 입니다.", tags = {"Auth"})
-    @PostMapping("/sign-in")
+    @Operation(summary = "login API", description = "login API 입니다.", tags = {"Auth"})
+    @PostMapping("/login")
     public CommonResponseEntity<SignInResponseVo> signIn(
             @RequestBody SignInRequestVo signInRequestVo) {
         ModelMapper modelMapper = new ModelMapper();
@@ -44,12 +43,28 @@ public class AuthController {
 
     }
 
-    @Operation(summary = "SignUp API", description = "SignUp API 입니다.", tags = {"Auth"})
-    @PostMapping("/sign-up")
+    @Operation(summary = "join API", description = "join API 입니다.", tags = {"Auth"})
+    @PostMapping("/join")
     public CommonResponseEntity<Void> signUp(
             @RequestBody SignUpRequestVo signUpRequestVo) {
         authService.signUp(new ModelMapper().map(signUpRequestVo, SignUpRequestDto.class));
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
 
+
+    @Operation(summary = "TestToken API", description = "토큰 테스트 API 입니다.", tags = {"Auth"})
+    @PostMapping("/token-test")
+    public CommonResponseEntity<TestTokenResponseVo> testToken(
+            @RequestBody TestTokenRequestVo testTokenRequestVo) {
+        ModelMapper modelMapper = new ModelMapper();
+        TestTokenRequestDto testTokenRequestDto = TestTokenRequestDto.builder().
+                accessToken(testTokenRequestVo.getAccessToken()).
+                build();
+        TestTokenResponseVo testTokenResponseVo = modelMapper.map(authService.testToken(testTokenRequestDto), TestTokenResponseVo.class);
+        log.info("accessResponseVo : {}", testTokenResponseVo);
+        return new CommonResponseEntity<>(
+                HttpStatus.OK,
+                CommonResponseMessage.SUCCESS.getMessage(),
+                testTokenResponseVo);
+    }
 }

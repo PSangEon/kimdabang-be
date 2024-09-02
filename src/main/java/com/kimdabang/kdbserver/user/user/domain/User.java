@@ -119,9 +119,9 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return this.email;
-    }
+    public String getUsername() { return this.name;}
+
+    public UUID getUserUuid() { return this.uuid; }
 
     @Override
     public boolean isAccountNonExpired() {
