@@ -2,8 +2,7 @@ package com.kimdabang.kdbserver.user.userStar.application;
 
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.user.userStar.domain.UserStar;
-import com.kimdabang.kdbserver.user.userStar.dto.UserStarCreateRequestDto;
-import com.kimdabang.kdbserver.user.userStar.dto.UserStarRequestDto;
+import com.kimdabang.kdbserver.user.userStar.dto.UserStarAddRequestDto;
 import com.kimdabang.kdbserver.user.userStar.dto.UserStarResponseDto;
 import com.kimdabang.kdbserver.user.userStar.infrastructure.UserStarRepository;
 import com.kimdabang.kdbserver.user.userStar.infrastructure.UserStarRepositoryCustom;
@@ -28,9 +27,9 @@ public class UserStarServiceImpl implements UserStarService{
 
 
     @Override
-    public List<UserStarResponseDto> getUserStar(UserStarRequestDto userStarRequestDto) {
-        UUID uuid = jwtTokenProvider.useToken(userStarRequestDto.getAccessToken());
-        List<UserStar> userStars = userStarRepositoryCustom.getUserStarWithDate(uuid, userStarRequestDto.getStartDate(), userStarRequestDto.getEndDate());
+    public List<UserStarResponseDto> getUserStar(Date start, Date end, String Authorization) {
+        UUID uuid = jwtTokenProvider.useToken(Authorization);
+        List<UserStar> userStars = userStarRepositoryCustom.getUserStarWithDate(uuid, start, end);
         log.info("userStars: {}",userStars);
         if (userStars != null) {
             //중복 개수 확인
@@ -58,11 +57,11 @@ public class UserStarServiceImpl implements UserStarService{
         return List.of();
     }
     @Override
-    public void createUserStar(UserStarCreateRequestDto userStarCreateRequestDto){
-        UUID uuid = jwtTokenProvider.useToken(userStarCreateRequestDto.getAccesstoken());
+    public void addUserStar(UserStarAddRequestDto userStarAddRequestDto){
+        UUID uuid = jwtTokenProvider.useToken(userStarAddRequestDto.getAccesstoken());
         Date now = new Date();
-        for(int i =0;i<userStarCreateRequestDto.getStarAmount();i++) {
-            userStarRepository.save(userStarCreateRequestDto.toEntity(uuid, now));
+        for(int i = 0; i< userStarAddRequestDto.getStarAmount(); i++) {
+            userStarRepository.save(userStarAddRequestDto.toEntity(uuid, now));
         }
     }
 }

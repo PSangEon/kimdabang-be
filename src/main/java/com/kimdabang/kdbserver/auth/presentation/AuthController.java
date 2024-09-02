@@ -25,8 +25,8 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @Operation(summary = "SignIn API", description = "SignIn API 입니다.", tags = {"Auth"})
-    @PostMapping("/sign-in")
+    @Operation(summary = "login API", description = "login API 입니다.", tags = {"Auth"})
+    @PostMapping("/login")
     public CommonResponseEntity<SignInResponseVo> signIn(
             @RequestBody SignInRequestVo signInRequestVo) {
         ModelMapper modelMapper = new ModelMapper();
@@ -43,8 +43,8 @@ public class AuthController {
 
     }
 
-    @Operation(summary = "SignUp API", description = "SignUp API 입니다.", tags = {"Auth"})
-    @PostMapping("/sign-up")
+    @Operation(summary = "join API", description = "join API 입니다.", tags = {"Auth"})
+    @PostMapping("/join")
     public CommonResponseEntity<Void> signUp(
             @RequestBody SignUpRequestVo signUpRequestVo) {
         authService.signUp(new ModelMapper().map(signUpRequestVo, SignUpRequestDto.class));
