@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,15 +44,16 @@ public class AuthServiceImpl implements AuthService{
         log.info("user : {}", user);
 
         try {
-           //Authentication authentication =
+           Authentication authentication =
                    authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            user.getLoginId(),
+                            user.getEmail(),
+                            //todo Email-> loginid로 바꾸기
                             signInRequestDto.getPassword()
                     )
            );
            return SignInResponseDto.builder()
-                        .accessToken(createToken(user.getUuid()))
+                        .accessToken(createToken(authentication))
                         .build();
         } catch (Exception e) {
             throw new IllegalArgumentException("로그인 실패");
@@ -64,9 +66,9 @@ public class AuthServiceImpl implements AuthService{
                 .uuid(uuid).build();
     }
 
-    private String createToken(String uuid) {
-        //return jwtTokenProvider.generateAccessToken(authentication, uuid);
-        return jwtTokenProvider.generateAccessToken(uuid);
+    private String createToken(Authentication authentication) {
+        return jwtTokenProvider.generateAccessToken(authentication);
+        //return jwtTokenProvider.generateAccessToken(uuid);
     }
 
 

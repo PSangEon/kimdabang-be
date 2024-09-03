@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface StarRepositoryCustom {
-    List<Star> getUserStarWithDate(String uuid, Date start, Date end);
+    List<Star> getStarWithDate(String uuid, Date start, Date end);
 }

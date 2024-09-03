@@ -29,7 +29,7 @@ public class StarServiceImpl implements StarService {
     @Override
     public List<StarResponseDto> getStar(Date start, Date end, String Authorization) {
         String uuid = jwtTokenProvider.useToken(Authorization);
-        List<Star> stars = starRepositoryCustom.getUserStarWithDate(uuid, start, end);
+        List<Star> stars = starRepositoryCustom.getStarWithDate(uuid, start, end);
         log.info("userStars: {}", stars);
         if (stars != null) {
             //중복 개수 확인

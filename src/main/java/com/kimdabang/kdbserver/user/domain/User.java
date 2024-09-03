@@ -25,7 +25,7 @@ public class User extends BaseEntity implements UserDetails {
     private Long id;
 
     @Comment("고객 UUID")
-    @Column(columnDefinition = "BINARY(16)",nullable = false, updatable = false)
+    @Column(nullable = false, length = 100)
     private String uuid;
 
     @Comment("고객 로그인아이디")

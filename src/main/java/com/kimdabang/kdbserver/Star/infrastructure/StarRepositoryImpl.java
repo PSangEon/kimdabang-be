@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Repository
@@ -17,7 +16,7 @@ public class StarRepositoryImpl implements StarRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Star> getUserStarWithDate(String uuid, Date start, Date end) {
+    public List<Star> getStarWithDate(String uuid, Date start, Date end) {
         QStar star = QStar.star;
 
         return jpaQueryFactory.selectFrom(star)

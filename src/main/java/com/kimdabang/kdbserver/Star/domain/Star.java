@@ -33,7 +33,7 @@ public class Star {
     private Boolean isEcho;
 
     @Comment("고객 UUID")
-    @Column(columnDefinition = "BINARY(16)",nullable = false, updatable = false)
+    @Column(nullable = false, length = 100)
     private String uuid;
 
     @Comment("사용 여부")
