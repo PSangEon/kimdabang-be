@@ -50,10 +50,9 @@ public class JwtTokenProvider {
             throw new RuntimeException("Invalid or expired JWT token", e);
         }
     }
-    public UUID useToken(String accessToken) {
+    public String useToken(String accessToken) {
         Claims claims = parseToken(accessToken);          // 토큰에서 클레임을 추출합니다.
-        String uuidString = claims.get("uuid", String.class);
-        UUID uuid = UUID.fromString(uuidString);
+        String uuid = claims.get("uuid", String.class);
         Date issuedAt = claims.getIssuedAt();
 
         return uuid;

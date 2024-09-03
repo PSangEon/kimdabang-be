@@ -34,7 +34,7 @@ public class Star {
 
     @Comment("고객 UUID")
     @Column(columnDefinition = "BINARY(16)",nullable = false, updatable = false)
-    private UUID uuid;
+    private String uuid;
 
     @Comment("사용 여부")
     @Column(nullable = false)
@@ -53,7 +53,7 @@ public class Star {
             Date expirationDate,
             Date createdAt,
             Boolean isEcho,
-            UUID uuid,
+            String uuid,
             Boolean isUsed,
             Date usedAt,
             String description

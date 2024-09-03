@@ -30,7 +30,7 @@ public class SignUpRequestDto {
     public User toEntity(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .loginId(loginId)
-                .uuid(UUID.randomUUID())
+                .uuid(UUID.randomUUID().toString())
                 .password(passwordEncoder.encode(password))
                 .name(name)
                 .email(email)

@@ -10,5 +10,5 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TestTokenResponseVo {
-    private UUID uuid;
+    private String uuid;
 }

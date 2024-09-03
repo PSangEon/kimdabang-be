@@ -12,5 +12,5 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TestTokenResponseDto {
-    private UUID uuid;
+    private String uuid;
 }

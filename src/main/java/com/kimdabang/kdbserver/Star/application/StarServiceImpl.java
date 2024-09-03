@@ -28,7 +28,7 @@ public class StarServiceImpl implements StarService {
 
     @Override
     public List<StarResponseDto> getStar(Date start, Date end, String Authorization) {
-        UUID uuid = jwtTokenProvider.useToken(Authorization);
+        String uuid = jwtTokenProvider.useToken(Authorization);
         List<Star> stars = starRepositoryCustom.getUserStarWithDate(uuid, start, end);
         log.info("userStars: {}", stars);
         if (stars != null) {

@@ -10,5 +10,5 @@ public interface UserService {
     void signUp(UserSignUpDto userSignUpDto);
     UserSignUpDto getUserById(Long id);
     UserSignUpDto getUserByEmail(String email);
-    UserResponseDto getUserByUuid(UUID uuid);
+    UserResponseDto getUserByUuid(String uuid);
 }

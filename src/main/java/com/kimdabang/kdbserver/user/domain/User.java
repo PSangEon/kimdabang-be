@@ -26,7 +26,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Comment("고객 UUID")
     @Column(columnDefinition = "BINARY(16)",nullable = false, updatable = false)
-    private UUID uuid;
+    private String uuid;
 
     @Comment("고객 로그인아이디")
     @Column(nullable = false, length = 100)
@@ -80,7 +80,7 @@ public class User extends BaseEntity implements UserDetails {
     public User(
             Long id,
             String loginId,
-            UUID uuid,
+            String uuid,
             String password,
             String name,
             String email,
@@ -118,9 +118,7 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-    public String getUsername() { return this.name;}
-
-    public UUID getUserUuid() { return this.uuid; }
+    public String getUsername() { return this.uuid;}
 
     @Override
     public boolean isAccountNonExpired() {

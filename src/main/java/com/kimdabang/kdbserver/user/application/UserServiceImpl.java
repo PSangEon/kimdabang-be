@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserService{
         User user = userSignUpDto.toEntity();
         log.info("user : {}", user);
         userRepository.save(user);
-//        todo : memberSignUpDto를 Member로 변환하여 저장
     }
 
     @Override
@@ -46,14 +45,15 @@ public class UserServiceImpl implements UserService{
                 .grade(getUser.getGrade())
                 .profileImg(getUser.getProfileImg())
                 .build();
-        log.info("userSignUpDto : {}", userSignUpDto);
+        log.info("userSignUpDto: {}", userSignUpDto);
         return userSignUpDto;
     }
-    public UserResponseDto getUserByUuid(UUID uuid) {
-
-        log.info("id : {}", uuid);
-        User getUser = userRepository.findByUuid(uuid).orElseThrow();
-        log.info("getUserr : {}", getUser);
+    public UserResponseDto getUserByUuid(String uuid) {
+        log.info("uuid : {}", uuid);
+        User getUser = userRepository.findByUuid(uuid).orElseThrow(
+                () -> new IllegalArgumentException("해당 uuid를 가진 회원이 없습니다.")
+        );
+        log.info("getUser : {}", getUser);
         UserResponseDto userResponseDto = UserResponseDto.builder()
                 .loginId(getUser.getLoginId())
                 .name(getUser.getName())
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService{
                 .grade(getUser.getGrade())
                 .profileImg(getUser.getProfileImg())
                 .build();
-        log.info("userSignUpDto : {}", userResponseDto);
+        log.info("userResponseDto: {}", userResponseDto);
         return userResponseDto;
     }
 
@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService{
                     .grade(user.getGrade())
                     .profileImg(user.getProfileImg())
                     .build();
+            log.info("userSignUpDto: {}", userSignUpDto);
             return userSignUpDto;
         }
         return null;

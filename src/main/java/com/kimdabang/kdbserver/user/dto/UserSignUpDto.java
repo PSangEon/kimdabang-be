@@ -17,7 +17,7 @@ import java.util.UUID;
 public class UserSignUpDto {
 
     private Long id;
-    private UUID uuid;
+    private String uuid;
     private String loginId;
     private String password;
     private String name;

@@ -8,7 +8,6 @@ import com.kimdabang.kdbserver.Address.dto.AddressAddRequestDto;
 import com.kimdabang.kdbserver.Address.dto.AddressRequestDto;
 import com.kimdabang.kdbserver.Address.dto.AddressResponseDto;
 import com.kimdabang.kdbserver.Address.infrastructure.AddressRepository;
-import com.kimdabang.kdbserver.Address.infrastructure.AddressRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,14 +22,10 @@ public class AddressServiceImpl implements AddressService {
     private final AuthRepository authRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AddressRepository addressRepository;
-    private final AddressRepositoryCustom addressRepositoryCustom;
 
     @Override
     public List<AddressResponseDto> getUserAddress(String Authorization){
-        User user = authRepository.findByUuid(jwtTokenProvider.useToken(Authorization)).orElseThrow(
-                () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
-        );
-        List<Address> addresses = addressRepositoryCustom.getUserAddressWithUser(user);
+        List<Address> addresses = addressRepository.findByUserUuid(jwtTokenProvider.useToken(Authorization));
         log.info("userAddresses: {}", addresses);
         if (addresses != null) {
             return addresses.stream()
@@ -59,13 +54,9 @@ public class AddressServiceImpl implements AddressService {
 
         addressRepository.save(addressRequestDto.toEntity(addressRequestDto, user));
     }
-
     @Override
     public void deleteUserAddress(AddressRequestDto addressRequestDto) {
-        User user = authRepository.findByUuid(jwtTokenProvider.useToken(addressRequestDto.getAccessToken())).orElseThrow(
-                () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
-        );
-        Address deleteAddress = addressRepositoryCustom.findByUserAddressIdWithUser(addressRequestDto.getId(), user)
+        Address deleteAddress = addressRepository.findById(addressRequestDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
         addressRepository.delete(deleteAddress);
     }
