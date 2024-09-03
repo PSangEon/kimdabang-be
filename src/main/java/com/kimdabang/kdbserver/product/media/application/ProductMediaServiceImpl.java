@@ -49,21 +49,6 @@ public class ProductMediaServiceImpl implements ProductMediaService {
     }
 
     @Override
-    public ProductMediaResponseDto getProductMedia(String productMediaId) {
-        Long longProductMediaId = Long.parseLong(productMediaId);
-        ProductMedia getProductMedia = productMediaRepository.findById(longProductMediaId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품 미디어가 존재하지 않습니다."));
-
-        return ProductMediaResponseDto.builder()
-                .id(getProductMedia.getId())
-                .productId(getProductMedia.getProduct().getId())
-                .mediaName(getProductMedia.getMediaName())
-                .mediaType(getProductMedia.getMediaType())
-                .mediaURL(getProductMedia.getMediaURL())
-                .build();
-    }
-
-    @Override
     public List<ProductMediaResponseDto> getAllProductMedia(String productId) {
         Long longProductId = Long.parseLong(productId);
         List<ProductMedia> productMediaList = productMediaRepository.findAllByProductId(longProductId);
