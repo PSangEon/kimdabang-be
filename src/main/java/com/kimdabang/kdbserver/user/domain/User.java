@@ -1,11 +1,9 @@
 package com.kimdabang.kdbserver.user.domain;
 import com.kimdabang.kdbserver.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +17,7 @@ import java.util.UUID;
 @Entity
 @ToString
 @NoArgsConstructor
+@DynamicUpdate  //특정 칼럼만 update하기 위해 사용
 public class User extends BaseEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -105,6 +104,11 @@ public class User extends BaseEntity implements UserDetails {
         this.nickname = nickname;
         this.grade = grade;
         this.profileImg = profileImg;
+    }
+
+
+    public void updatePassword(String password){
+        this.password = password;
     }
 
     public void hashPassword(String password) {

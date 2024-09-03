@@ -1,8 +1,10 @@
 package com.kimdabang.kdbserver.auth.application;
 
+import com.kimdabang.kdbserver.auth.dto.in.PasswordRequestDto;
 import com.kimdabang.kdbserver.auth.dto.in.SignInRequestDto;
 import com.kimdabang.kdbserver.auth.dto.in.SignUpRequestDto;
 import com.kimdabang.kdbserver.auth.dto.in.TestTokenRequestDto;
+import com.kimdabang.kdbserver.auth.dto.out.PasswordVerifyResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.SignInResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.TestTokenResponseDto;
 import com.kimdabang.kdbserver.auth.infrastructure.AuthRepository;
@@ -62,6 +64,43 @@ public class AuthServiceImpl implements AuthService{
             throw new IllegalArgumentException("로그인 실패");
         }
     }
+
+    @Override
+    public void putPassword(PasswordRequestDto passwordRequestDto) {
+        String uuid = jwtTokenProvider.useToken(passwordRequestDto.getAccessToken());
+        User user = authRepository.findByUuid(uuid).orElseThrow(
+                () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
+        );
+        user.updatePassword(passwordEncoder.encode(passwordRequestDto.getPassword()));
+        authRepository.save(user);
+    }
+
+    @Override
+    public PasswordVerifyResponseDto verifyPassword(PasswordRequestDto passwordRequestDto) {
+        String uuid = jwtTokenProvider.useToken(passwordRequestDto.getAccessToken());
+        User user = authRepository.findByUuid(uuid).orElseThrow(
+                () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
+        );
+        log.info("passwordEncoder.encode(passwordRequestDto.getPassword()):{}",passwordEncoder.encode(passwordRequestDto.getPassword()));
+        log.info("user.getPassword():{}",user.getPassword());
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getEmail(),
+                            //todo Email-> loginid로 바꾸기
+                            passwordRequestDto.getPassword()
+                            )
+                    );
+            return PasswordVerifyResponseDto.builder()
+                    .Verification(true)
+                    .build();
+        } catch (Exception e) {
+            return PasswordVerifyResponseDto.builder()
+                    .Verification(false)
+                    .build();
+        }
+    }
+
     @Override
     public TestTokenResponseDto testToken(TestTokenRequestDto testTokenRequestDto) {
         String uuid = jwtTokenProvider.useToken(testTokenRequestDto.getAccessToken());

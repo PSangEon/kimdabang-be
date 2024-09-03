@@ -1,12 +1,16 @@
 package com.kimdabang.kdbserver.auth.presentation;
 
 import com.kimdabang.kdbserver.auth.application.AuthService;
+import com.kimdabang.kdbserver.auth.dto.in.PasswordRequestDto;
 import com.kimdabang.kdbserver.auth.dto.in.TestTokenRequestDto;
 import com.kimdabang.kdbserver.auth.dto.in.SignInRequestDto;
 import com.kimdabang.kdbserver.auth.dto.in.SignUpRequestDto;
+import com.kimdabang.kdbserver.auth.dto.out.PasswordVerifyResponseDto;
+import com.kimdabang.kdbserver.auth.vo.in.PasswordRequestVo;
 import com.kimdabang.kdbserver.auth.vo.in.SignInRequestVo;
 import com.kimdabang.kdbserver.auth.vo.in.SignUpRequestVo;
 import com.kimdabang.kdbserver.auth.vo.in.TestTokenRequestVo;
+import com.kimdabang.kdbserver.auth.vo.out.PasswordVerifyResponseVo;
 import com.kimdabang.kdbserver.auth.vo.out.SignInResponseVo;
 import com.kimdabang.kdbserver.auth.vo.out.TestTokenResponseVo;
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
@@ -16,10 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -55,6 +56,25 @@ public class AuthController {
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
 
+    @Operation(summary = "verifypassword API", description = "verifypassword API 입니다.", tags = {"Auth"})
+    @PostMapping("/verifypassword")
+    public CommonResponseEntity<PasswordVerifyResponseVo> verifyPassword(
+            @RequestBody PasswordRequestVo passwordRequestVo) {
+        ModelMapper modelMapper = new ModelMapper();
+        PasswordRequestDto passwordRequestDto = new ModelMapper().map(passwordRequestVo, PasswordRequestDto.class);
+        log.info("passwordRequestDto:{}",passwordRequestDto);
+        PasswordVerifyResponseVo passwordVerifyResponseVo = modelMapper.map(authService.verifyPassword(passwordRequestDto), PasswordVerifyResponseVo.class);
+        log.info("passwordVerifyResponseVo:{}",passwordVerifyResponseVo);
+        return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), passwordVerifyResponseVo);
+    }
+
+    @Operation(summary = "putpassword API", description = "putpassword API 입니다.", tags = {"Auth"})
+    @PostMapping("/putpassword")
+    public CommonResponseEntity<Void> putPassword(
+            @RequestBody PasswordRequestVo passwordRequestVo) {
+        authService.putPassword(new ModelMapper().map(passwordRequestVo, PasswordRequestDto.class));
+        return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
+    }
 
     @Operation(summary = "TestToken API", description = "토큰 테스트 API 입니다.", tags = {"Auth"})
     @PostMapping("/token-test")
