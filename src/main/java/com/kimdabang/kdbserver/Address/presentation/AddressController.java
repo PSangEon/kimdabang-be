@@ -28,18 +28,18 @@ public class AddressController {
 
     @Operation(summary = "UserAddressAdd API", description = "UserAddressAdd API 입니다.", tags = {"useraddress-controller"})
     @PostMapping("/add-useraddress")
-    public CommonResponseEntity<Void> addUserAddress(
+    public CommonResponseEntity<Void> addAddress(
             @RequestBody AddressAddRequestVo addressAddRequestVo) {
-        addressService.addUserAddress(new ModelMapper().map(addressAddRequestVo, AddressAddRequestDto.class));
+        addressService.addAddress(new ModelMapper().map(addressAddRequestVo, AddressAddRequestDto.class));
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
 
     @Operation(summary = "UserAddressGet API", description = "UserAddressGet API 입니다.", tags = {"useraddress-controller"})
     @GetMapping("/get-useraddress")
-    public CommonResponseEntity<List<AddressResponseVo>> getUserAddress(
+    public CommonResponseEntity<List<AddressResponseVo>> getAddress(
             @RequestHeader ("Authorization") String Authorization) {
         List<AddressResponseDto> addressResponseDtoList =
-                addressService.getUserAddress(Authorization);
+                addressService.getAddress(Authorization);
         return new CommonResponseEntity<>(
                 HttpStatus.OK,
                 "useraddress 조회 성공",
@@ -50,16 +50,16 @@ public class AddressController {
     }
     @Operation(summary = "UserAddressPut API", description = "UserAddressPut API 입니다.", tags = {"useraddress-controller"})
     @PutMapping("/put-useraddress")
-    public CommonResponseEntity<Void> putUserAddress(
+    public CommonResponseEntity<Void> putAddress(
             @RequestBody AddressRequestVo addressRequestVo) {
-        addressService.putUserAddress(new ModelMapper().map(addressRequestVo, AddressRequestDto.class));
+        addressService.putAddress(new ModelMapper().map(addressRequestVo, AddressRequestDto.class));
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
     @Operation(summary = "UserAddressDelete API", description = "UserAddressDelete API 입니다.", tags = {"useraddress-controller"})
     @DeleteMapping("/delete-useraddress")
-    public CommonResponseEntity<Void> deleteUserAddress(
+    public CommonResponseEntity<Void> deleteAddress(
             @RequestBody AddressRequestVo addressRequestVo) {
-        addressService.deleteUserAddress(new ModelMapper().map(addressRequestVo, AddressRequestDto.class));
+        addressService.deleteAddress(new ModelMapper().map(addressRequestVo, AddressRequestDto.class));
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
 }

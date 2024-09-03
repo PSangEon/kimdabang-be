@@ -29,14 +29,14 @@ public class StarController {
 
     @Operation(summary = "UserStarAdd API", description = "userStarAdd API 입니다.", tags = {"userstar-controller"})
     @PostMapping("/add-userstar")
-    public CommonResponseEntity<Void> addUserStar(
+    public CommonResponseEntity<Void> addStar(
             @RequestBody StarAddRequestVo starAddRequestVo) {
         starService.addStar(new ModelMapper().map(starAddRequestVo, StarAddRequestDto.class));
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
     @Operation(summary = "UserStarGet API", description = "userStarGet API 입니다.", tags = {"userstar-controller"})
     @GetMapping("/get-userstar")
-    public CommonResponseEntity<List<StarResponseVo>> getUserStar(
+    public CommonResponseEntity<List<StarResponseVo>> getStar(
             @RequestHeader ("Authorization") String Authorization,
             @RequestParam(value = "start") String start, @RequestParam(value = "end") String end) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh:mm:ss");

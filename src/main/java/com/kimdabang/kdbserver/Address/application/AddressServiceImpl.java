@@ -24,7 +24,7 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
 
     @Override
-    public List<AddressResponseDto> getUserAddress(String Authorization){
+    public List<AddressResponseDto> getAddress(String Authorization){
         List<Address> addresses = addressRepository.findByUserUuid(jwtTokenProvider.useToken(Authorization));
         log.info("userAddresses: {}", addresses);
         if (addresses != null) {
@@ -40,14 +40,14 @@ public class AddressServiceImpl implements AddressService {
         return List.of();
     }
     @Override
-    public void addUserAddress(AddressAddRequestDto addressAddRequestDto) {
+    public void addAddress(AddressAddRequestDto addressAddRequestDto) {
         User user = authRepository.findByUuid(jwtTokenProvider.useToken(addressAddRequestDto.getAccessToken())).orElseThrow(
                 () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
         );
         addressRepository.save(addressAddRequestDto.toEntity(addressAddRequestDto, user));
     }
     @Override
-    public void putUserAddress(AddressRequestDto addressRequestDto) {
+    public void putAddress(AddressRequestDto addressRequestDto) {
         User user = authRepository.findByUuid(jwtTokenProvider.useToken(addressRequestDto.getAccessToken())).orElseThrow(
                 () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
         );
@@ -55,7 +55,7 @@ public class AddressServiceImpl implements AddressService {
         addressRepository.save(addressRequestDto.toEntity(addressRequestDto, user));
     }
     @Override
-    public void deleteUserAddress(AddressRequestDto addressRequestDto) {
+    public void deleteAddress(AddressRequestDto addressRequestDto) {
         Address deleteAddress = addressRepository.findById(addressRequestDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
         addressRepository.delete(deleteAddress);

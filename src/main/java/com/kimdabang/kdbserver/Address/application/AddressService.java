@@ -7,8 +7,8 @@ import com.kimdabang.kdbserver.Address.dto.AddressResponseDto;
 import java.util.List;
 
 public interface AddressService {
-    List<AddressResponseDto> getUserAddress(String Authorization);
-    void addUserAddress(AddressAddRequestDto addressAddRequestDto);
-    void putUserAddress(AddressRequestDto addressRequestDto);
-    void deleteUserAddress(AddressRequestDto addressRequestDto);
+    List<AddressResponseDto> getAddress(String Authorization);
+    void addAddress(AddressAddRequestDto addressAddRequestDto);
+    void putAddress(AddressRequestDto addressRequestDto);
+    void deleteAddress(AddressRequestDto addressRequestDto);
 }
