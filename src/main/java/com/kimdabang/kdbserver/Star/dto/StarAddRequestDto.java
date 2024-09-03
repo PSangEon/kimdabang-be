@@ -18,7 +18,7 @@ public class StarAddRequestDto {
     private Boolean isEcho;
     private Integer starAmount;
 
-    public Star toEntity(UUID uuid , Date createdAt) {
+    public Star toEntity(String uuid , Date createdAt) {
         Date now = new Date();
         return Star.builder()
                 .uuid(uuid)

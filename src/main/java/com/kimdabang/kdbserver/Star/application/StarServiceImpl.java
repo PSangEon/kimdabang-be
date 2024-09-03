@@ -58,7 +58,7 @@ public class StarServiceImpl implements StarService {
     }
     @Override
     public void addStar(StarAddRequestDto starAddRequestDto){
-        UUID uuid = jwtTokenProvider.useToken(starAddRequestDto.getAccesstoken());
+        String uuid = jwtTokenProvider.useToken(starAddRequestDto.getAccesstoken());
         Date now = new Date();
         for(int i = 0; i< starAddRequestDto.getStarAmount(); i++) {
             starRepository.save(starAddRequestDto.toEntity(uuid, now));
