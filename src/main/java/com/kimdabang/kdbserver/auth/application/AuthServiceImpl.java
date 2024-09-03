@@ -64,7 +64,7 @@ public class AuthServiceImpl implements AuthService{
                 .uuid(uuid).build();
     }
 
-    private String createToken(UUID uuid) {
+    private String createToken(String uuid) {
         //return jwtTokenProvider.generateAccessToken(authentication, uuid);
         return jwtTokenProvider.generateAccessToken(uuid);
     }

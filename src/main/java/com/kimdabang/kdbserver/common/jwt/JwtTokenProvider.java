@@ -24,7 +24,7 @@ public class JwtTokenProvider {
 
     //public String generateAccessToken(Authentication authentication, UUID uuid) {
 
-    public String generateAccessToken(UUID uuid) {
+    public String generateAccessToken(String uuid) {
 
         //Claims claims = Jwts.claims().subject(authentication.getName()).build();
 

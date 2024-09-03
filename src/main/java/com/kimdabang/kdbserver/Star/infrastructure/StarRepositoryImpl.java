@@ -1,6 +1,6 @@
 package com.kimdabang.kdbserver.Star.infrastructure;
 
-import com.kimdabang.kdbserver.user.userStar.domain.QUserStar;
+import com.kimdabang.kdbserver.Star.domain.QStar;
 import com.kimdabang.kdbserver.Star.domain.Star;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +17,11 @@ public class StarRepositoryImpl implements StarRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Star> getUserStarWithDate(UUID uuid, Date start, Date end) {
-        QUserStar userStar = QUserStar.userStar;
+    public List<Star> getUserStarWithDate(String uuid, Date start, Date end) {
+        QStar star = QStar.star;
 
-        return jpaQueryFactory.selectFrom(userStar)
-                .where(userStar.createdAt.between(start, end).and(userStar.uuid.eq(uuid)))  // uuid 조건 추가
+        return jpaQueryFactory.selectFrom(star)
+                .where(star.createdAt.between(start, end).and(star.uuid.eq(uuid)))  // uuid 조건 추가
                 .fetch();
     }
 }
