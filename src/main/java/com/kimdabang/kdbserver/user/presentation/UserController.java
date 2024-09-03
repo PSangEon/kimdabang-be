@@ -1,13 +1,16 @@
 package com.kimdabang.kdbserver.user.presentation;
 
+import com.kimdabang.kdbserver.auth.vo.SignInResponseVo;
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
 import com.kimdabang.kdbserver.common.entity.CommonResponseMessage;
+import com.kimdabang.kdbserver.user.domain.User;
 import com.kimdabang.kdbserver.user.dto.UserRequestDto;
 import com.kimdabang.kdbserver.user.dto.UserResponseDto;
 import com.kimdabang.kdbserver.user.infrastructure.UserRepository;
 import com.kimdabang.kdbserver.user.vo.UserRequestVo;
 import com.kimdabang.kdbserver.user.application.UserService;
 
+import com.kimdabang.kdbserver.user.vo.UserResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +27,13 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
 
-//    @Operation(summary = "UserGet API", description = "UserGet API 입니다.", tags = {"user-controller"})
-//    @GetMapping("/get-user")
-//    public CommonResponseEntity<Void> getUser(
-//            @RequestHeader ("Authorization") String Authorization) {
-//        userService.getUser(Authorization);
-//        return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), UserResponseDto::);
-//    }
+    @Operation(summary = "UserGet API", description = "UserGet API 입니다.", tags = {"user-controller"})
+    @GetMapping("/get-user")
+    public CommonResponseEntity<UserResponseVo> getUser(
+            @RequestHeader ("Authorization") String Authorization) {
+        UserResponseDto userResponseDto = userService.getUser(Authorization);
+        return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), userResponseDto.toResponseVo());
+    }
 
     @Operation(summary = "UserPut API", description = "UserPut API 입니다.", tags = {"user-controller"})
     @PutMapping("/put-user")
