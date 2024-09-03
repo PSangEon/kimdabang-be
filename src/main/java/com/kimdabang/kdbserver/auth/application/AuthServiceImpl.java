@@ -3,7 +3,7 @@ package com.kimdabang.kdbserver.auth.application;
 import com.kimdabang.kdbserver.auth.dto.*;
 import com.kimdabang.kdbserver.auth.infrastructure.AuthRepository;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
-import com.kimdabang.kdbserver.user.user.domain.User;
+import com.kimdabang.kdbserver.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,17 +1,19 @@
-package com.kimdabang.kdbserver.auth.vo;
+package com.kimdabang.kdbserver.user.dto;
 
 import com.kimdabang.kdbserver.user.domain.Gender;
-import lombok.Getter;
-import lombok.ToString;
+import com.kimdabang.kdbserver.user.domain.Grade;
+import lombok.*;
 
 import java.util.Date;
 
-@ToString
 @Getter
-public class SignUpRequestVo {
-
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+public class UserResponseDto {
     private String loginId;
-    private String password;
     private String name;
     private String email;
     private String phone;
@@ -19,4 +21,7 @@ public class SignUpRequestVo {
     private Boolean solar;
     private Date birth;
     private String nickname;
+    private Grade grade;
+    private String profileImg;
+
 }

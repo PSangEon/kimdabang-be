@@ -1,8 +1,8 @@
 package com.kimdabang.kdbserver.auth.dto;
 
-import com.kimdabang.kdbserver.user.user.domain.Gender;
-import com.kimdabang.kdbserver.user.user.domain.Grade;
-import com.kimdabang.kdbserver.user.user.domain.User;
+import com.kimdabang.kdbserver.user.domain.Gender;
+import com.kimdabang.kdbserver.user.domain.Grade;
+import com.kimdabang.kdbserver.user.domain.User;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
