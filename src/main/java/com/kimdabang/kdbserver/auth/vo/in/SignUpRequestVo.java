@@ -1,4 +1,4 @@
-package com.kimdabang.kdbserver.auth.vo;
+package com.kimdabang.kdbserver.auth.vo.in;
 
 import com.kimdabang.kdbserver.user.domain.Gender;
 import lombok.Getter;

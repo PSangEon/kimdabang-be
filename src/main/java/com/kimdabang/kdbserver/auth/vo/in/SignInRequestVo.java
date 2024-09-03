@@ -1,4 +1,4 @@
-package com.kimdabang.kdbserver.auth.vo;
+package com.kimdabang.kdbserver.auth.vo.in;
 
 import lombok.Getter;
 import lombok.ToString;

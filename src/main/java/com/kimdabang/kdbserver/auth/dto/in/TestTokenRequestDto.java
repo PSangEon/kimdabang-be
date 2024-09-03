@@ -1,4 +1,4 @@
-package com.kimdabang.kdbserver.auth.dto;
+package com.kimdabang.kdbserver.auth.dto.in;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignInRequestDto {
-
-    private String loginId;
-    private String password;
-
+public class TestTokenRequestDto {
+    private String accessToken;
 }

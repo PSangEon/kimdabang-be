@@ -1,11 +1,9 @@
-package com.kimdabang.kdbserver.auth.dto;
+package com.kimdabang.kdbserver.auth.dto.out;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Getter
 @Builder
@@ -15,10 +13,7 @@ public class SignInResponseDto {
 
     private String accessToken;
 //    private String refreshToken;
-//    private String name;
-//    private UUID uuid;
-
-//    todo : to vo SignInResponseVo
+    private String name;
 
 
 

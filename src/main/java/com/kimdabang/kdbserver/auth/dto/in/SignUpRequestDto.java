@@ -1,4 +1,4 @@
-package com.kimdabang.kdbserver.auth.dto;
+package com.kimdabang.kdbserver.auth.dto.in;
 
 import com.kimdabang.kdbserver.user.domain.Gender;
 import com.kimdabang.kdbserver.user.domain.Grade;

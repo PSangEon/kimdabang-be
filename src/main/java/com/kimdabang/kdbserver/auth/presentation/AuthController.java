@@ -1,10 +1,14 @@
 package com.kimdabang.kdbserver.auth.presentation;
 
 import com.kimdabang.kdbserver.auth.application.AuthService;
-import com.kimdabang.kdbserver.auth.dto.TestTokenRequestDto;
-import com.kimdabang.kdbserver.auth.dto.SignInRequestDto;
-import com.kimdabang.kdbserver.auth.dto.SignUpRequestDto;
-import com.kimdabang.kdbserver.auth.vo.*;
+import com.kimdabang.kdbserver.auth.dto.in.TestTokenRequestDto;
+import com.kimdabang.kdbserver.auth.dto.in.SignInRequestDto;
+import com.kimdabang.kdbserver.auth.dto.in.SignUpRequestDto;
+import com.kimdabang.kdbserver.auth.vo.in.SignInRequestVo;
+import com.kimdabang.kdbserver.auth.vo.in.SignUpRequestVo;
+import com.kimdabang.kdbserver.auth.vo.in.TestTokenRequestVo;
+import com.kimdabang.kdbserver.auth.vo.out.SignInResponseVo;
+import com.kimdabang.kdbserver.auth.vo.out.TestTokenResponseVo;
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
 import com.kimdabang.kdbserver.common.entity.CommonResponseMessage;
 import io.swagger.v3.oas.annotations.Operation;

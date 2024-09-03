@@ -1,6 +1,10 @@
 package com.kimdabang.kdbserver.auth.application;
 
-import com.kimdabang.kdbserver.auth.dto.*;
+import com.kimdabang.kdbserver.auth.dto.in.SignInRequestDto;
+import com.kimdabang.kdbserver.auth.dto.in.SignUpRequestDto;
+import com.kimdabang.kdbserver.auth.dto.in.TestTokenRequestDto;
+import com.kimdabang.kdbserver.auth.dto.out.SignInResponseDto;
+import com.kimdabang.kdbserver.auth.dto.out.TestTokenResponseDto;
 import com.kimdabang.kdbserver.auth.infrastructure.AuthRepository;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.user.domain.User;
@@ -11,8 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -53,8 +55,9 @@ public class AuthServiceImpl implements AuthService{
                     )
            );
            return SignInResponseDto.builder()
-                        .accessToken(createToken(authentication))
-                        .build();
+                   .accessToken(createToken(authentication))
+                   .name(user.getName())
+                   .build();
         } catch (Exception e) {
             throw new IllegalArgumentException("로그인 실패");
         }

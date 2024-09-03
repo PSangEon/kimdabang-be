@@ -1,8 +1,6 @@
-package com.kimdabang.kdbserver.auth.vo;
+package com.kimdabang.kdbserver.auth.vo.out;
 
 import lombok.*;
-
-import java.util.UUID;
 
 @Getter
 @Setter

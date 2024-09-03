@@ -1,9 +1,7 @@
 package com.kimdabang.kdbserver.user.presentation;
 
-import com.kimdabang.kdbserver.auth.vo.SignInResponseVo;
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
 import com.kimdabang.kdbserver.common.entity.CommonResponseMessage;
-import com.kimdabang.kdbserver.user.domain.User;
 import com.kimdabang.kdbserver.user.dto.UserRequestDto;
 import com.kimdabang.kdbserver.user.dto.UserResponseDto;
 import com.kimdabang.kdbserver.user.infrastructure.UserRepository;

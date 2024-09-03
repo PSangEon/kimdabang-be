@@ -1,6 +1,5 @@
 package com.kimdabang.kdbserver.common.jwt;
 
-import com.kimdabang.kdbserver.auth.dto.TestTokenRequestDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
-import java.util.UUID;
 
 
 @Slf4j
