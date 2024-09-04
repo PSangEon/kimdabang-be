@@ -68,17 +68,17 @@ public class ProductMediaController {
         );
     }
 
-    @GetMapping("/{productMediaId}")
-    public CommonResponseEntity<ProductMediaResponseVo> getProductMedia(
-            @PathVariable String productMediaId) {
-        ProductMediaResponseDto productMediaResponseDto = productMediaService.getProductMedia(productMediaId);
-
-        return new CommonResponseEntity<>(
-                HttpStatus.OK,
-                "상품 미디어 조회 성공",
-                productMediaResponseDto.toProductMediaResponseVo()
-        );
-    }
+//    @GetMapping("/{productMediaId}")
+//    public CommonResponseEntity<ProductMediaResponseVo> getProductMedia(
+//            @PathVariable String productMediaId) {
+//        ProductMediaResponseDto productMediaResponseDto = productMediaService.getProductMedia(productMediaId);
+//
+//        return new CommonResponseEntity<>(
+//                HttpStatus.OK,
+//                "상품 미디어 조회 성공",
+//                productMediaResponseDto.toProductMediaResponseVo()
+//        );
+//    }
 
     @GetMapping("{productId}/all")
     public CommonResponseEntity<List<ProductMediaResponseVo>> getAllProductMedia(
