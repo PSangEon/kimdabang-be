@@ -1,13 +1,12 @@
-package com.kimdabang.kdbserver.Star.dto;
+package com.kimdabang.kdbserver.Star.dto.out;
 
-import com.kimdabang.kdbserver.Star.vo.StarResponseVo;
+import com.kimdabang.kdbserver.Star.vo.out.StarResponseVo;
 import lombok.*;
 
 import java.util.Date;
 import java.util.Objects;
 
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
