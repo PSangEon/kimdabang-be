@@ -1,15 +1,9 @@
 package com.kimdabang.kdbserver.auth.presentation;
 
 import com.kimdabang.kdbserver.auth.application.AuthService;
-import com.kimdabang.kdbserver.auth.dto.in.PasswordRequestDto;
-import com.kimdabang.kdbserver.auth.dto.in.TestTokenRequestDto;
-import com.kimdabang.kdbserver.auth.dto.in.SignInRequestDto;
-import com.kimdabang.kdbserver.auth.dto.in.SignUpRequestDto;
-import com.kimdabang.kdbserver.auth.dto.out.PasswordVerifyResponseDto;
-import com.kimdabang.kdbserver.auth.vo.in.PasswordRequestVo;
-import com.kimdabang.kdbserver.auth.vo.in.SignInRequestVo;
-import com.kimdabang.kdbserver.auth.vo.in.SignUpRequestVo;
-import com.kimdabang.kdbserver.auth.vo.in.TestTokenRequestVo;
+import com.kimdabang.kdbserver.auth.dto.in.*;
+import com.kimdabang.kdbserver.auth.vo.in.*;
+import com.kimdabang.kdbserver.auth.vo.out.LoginIdFindResponseVo;
 import com.kimdabang.kdbserver.auth.vo.out.PasswordVerifyResponseVo;
 import com.kimdabang.kdbserver.auth.vo.out.SignInResponseVo;
 import com.kimdabang.kdbserver.auth.vo.out.TestTokenResponseVo;
@@ -54,6 +48,18 @@ public class AuthController {
             @RequestBody SignUpRequestVo signUpRequestVo) {
         authService.signUp(new ModelMapper().map(signUpRequestVo, SignUpRequestDto.class));
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
+    }
+
+    @Operation(summary = "findid API", description = "findid API 입니다.", tags = {"Auth"})
+    @PostMapping("/findid")
+    public CommonResponseEntity<LoginIdFindResponseVo> findId(
+            @RequestBody LoginIdFindReqiestVo loginIdFindReqiestVo) {
+        ModelMapper modelMapper = new ModelMapper();
+        LoginIdFindReqiestDto loginIdFindReqiestDto = LoginIdFindReqiestDto.builder().
+                email(loginIdFindReqiestVo.getEmail()).
+                build();
+        LoginIdFindResponseVo loginIdFindResponseVo =modelMapper.map(authService.findEmail(loginIdFindReqiestDto), LoginIdFindResponseVo.class);
+        return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), loginIdFindResponseVo);
     }
 
     @Operation(summary = "verifypassword API", description = "verifypassword API 입니다.", tags = {"Auth"})

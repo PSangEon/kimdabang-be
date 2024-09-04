@@ -1,9 +1,7 @@
 package com.kimdabang.kdbserver.auth.application;
 
-import com.kimdabang.kdbserver.auth.dto.in.PasswordRequestDto;
-import com.kimdabang.kdbserver.auth.dto.in.SignInRequestDto;
-import com.kimdabang.kdbserver.auth.dto.in.SignUpRequestDto;
-import com.kimdabang.kdbserver.auth.dto.in.TestTokenRequestDto;
+import com.kimdabang.kdbserver.auth.dto.in.*;
+import com.kimdabang.kdbserver.auth.dto.out.LoginIdFindResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.PasswordVerifyResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.SignInResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.TestTokenResponseDto;
@@ -15,4 +13,5 @@ public interface AuthService {
     TestTokenResponseDto testToken(TestTokenRequestDto testTokenRequestDto);
     void putPassword(PasswordRequestDto passwordRequestDto);
     PasswordVerifyResponseDto verifyPassword(PasswordRequestDto passwordRequestDto);
+    LoginIdFindResponseDto findEmail(LoginIdFindReqiestDto loginIdFindReqiestDto);
 }

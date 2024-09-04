@@ -1,9 +1,7 @@
 package com.kimdabang.kdbserver.auth.application;
 
-import com.kimdabang.kdbserver.auth.dto.in.PasswordRequestDto;
-import com.kimdabang.kdbserver.auth.dto.in.SignInRequestDto;
-import com.kimdabang.kdbserver.auth.dto.in.SignUpRequestDto;
-import com.kimdabang.kdbserver.auth.dto.in.TestTokenRequestDto;
+import com.kimdabang.kdbserver.auth.dto.in.*;
+import com.kimdabang.kdbserver.auth.dto.out.LoginIdFindResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.PasswordVerifyResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.SignInResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.TestTokenResponseDto;
@@ -65,6 +63,16 @@ public class AuthServiceImpl implements AuthService{
         }
     }
 
+    public LoginIdFindResponseDto findEmail(LoginIdFindReqiestDto loginIdFindReqiestDto) {
+        User user = authRepository.findByEmail(loginIdFindReqiestDto.getEmail()).orElse(null);
+        if (user != null) {
+            return LoginIdFindResponseDto.builder()
+                    .loginId(user.getLoginId())
+                    .build();
+        }
+        throw new IllegalArgumentException("일치하는 이메일이 없습니다");
+    }
+
     @Override
     public void putPassword(PasswordRequestDto passwordRequestDto) {
         String uuid = jwtTokenProvider.useToken(passwordRequestDto.getAccessToken());
@@ -81,8 +89,6 @@ public class AuthServiceImpl implements AuthService{
         User user = authRepository.findByUuid(uuid).orElseThrow(
                 () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
         );
-        log.info("passwordEncoder.encode(passwordRequestDto.getPassword()):{}",passwordEncoder.encode(passwordRequestDto.getPassword()));
-        log.info("user.getPassword():{}",user.getPassword());
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
