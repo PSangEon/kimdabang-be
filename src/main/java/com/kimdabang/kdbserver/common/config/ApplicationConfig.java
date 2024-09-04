@@ -1,7 +1,7 @@
 package com.kimdabang.kdbserver.common.config;
 
 
-import com.kimdabang.kdbserver.user.user.infrastructure.UserRepository;
+import com.kimdabang.kdbserver.user.infrastructure.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
