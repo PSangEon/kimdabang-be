@@ -19,6 +19,7 @@ public class SignUpRequestDto {
 
     private String loginId;
     private String password;
+    private String kakaoId;
     private String name;
     private String email;
     private String phone;
@@ -32,6 +33,7 @@ public class SignUpRequestDto {
                 .loginId(loginId)
                 .uuid(UUID.randomUUID().toString())
                 .password(passwordEncoder.encode(password))
+                .kakaoId(kakaoId)
                 .name(name)
                 .email(email)
                 .phone(phone)

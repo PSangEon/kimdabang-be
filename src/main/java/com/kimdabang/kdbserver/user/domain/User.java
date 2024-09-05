@@ -35,6 +35,10 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, length = 100)
     private String password;
 
+    @Comment("카카오 유저 번호")
+    @Column(nullable = true, length = 100)
+    private String kakaoId;
+
     @Comment("고객 이름")
     @Column(nullable = false, length = 100)
     private String name;
@@ -81,6 +85,7 @@ public class User extends BaseEntity implements UserDetails {
             String loginId,
             String uuid,
             String password,
+            String kakaoId,
             String name,
             String email,
             String phone,
@@ -95,6 +100,7 @@ public class User extends BaseEntity implements UserDetails {
         this.loginId = loginId;
         this.uuid = uuid;
         this.password = password;
+        this.kakaoId = kakaoId;
         this.name = name;
         this.email = email;
         this.phone = phone;
