@@ -14,4 +14,5 @@ public interface AuthService {
     void putPassword(PasswordRequestDto passwordRequestDto);
     PasswordVerifyResponseDto verifyPassword(PasswordRequestDto passwordRequestDto);
     LoginIdFindResponseDto findEmail(LoginIdFindReqiestDto loginIdFindReqiestDto);
+    //SignInResponseDto kakoLogin(KakaoLoginRequestDto kakaoLoginRequestDto);
 }

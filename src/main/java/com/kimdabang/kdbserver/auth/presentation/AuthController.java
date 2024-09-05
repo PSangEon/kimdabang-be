@@ -34,7 +34,7 @@ public class AuthController {
                 password(signInRequestVo.getPassword()).
                 build();
         SignInResponseVo signInResponseVo = modelMapper.map(authService.signIn(signInRequestDto), SignInResponseVo.class);
-        log.info("signInResponseVo : {}", signInResponseVo);
+        log.info("signInResponseVo: {}", signInResponseVo);
         return new CommonResponseEntity<>(
                 HttpStatus.OK,
                 CommonResponseMessage.SUCCESS.getMessage(),
@@ -49,6 +49,23 @@ public class AuthController {
         authService.signUp(new ModelMapper().map(signUpRequestVo, SignUpRequestDto.class));
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
+
+//    @Operation(summary = "kakaojoin API", description = "kakaojoin API 입니다.", tags = {"Auth"})
+//    @PostMapping("/kakaologin")
+//    public CommonResponseEntity<SignInResponseVo> kakaoLogin(
+//            @RequestBody KakaoLoginRequestVo kakaoLoginRequestVo) {
+//        ModelMapper modelMapper = new ModelMapper();
+//        KakaoLoginRequestDto kakaoLoginRequestDto = KakaoLoginRequestDto.builder().
+//                providerAccountId(kakaoLoginRequestVo.getProviderAccountId()).
+//                build();
+//        SignInResponseVo signInResponseVo = modelMapper.map(authService.kakoLogin(kakaoLoginRequestDto), SignInResponseVo.class);
+//        log.info("signInResponseVo: {}", signInResponseVo);
+//        return new CommonResponseEntity<>(
+//                    HttpStatus.OK,
+//                    CommonResponseMessage.SUCCESS.getMessage(),
+//                    signInResponseVo);
+//
+//    }
 
     @Operation(summary = "findid API", description = "findid API 입니다.", tags = {"Auth"})
     @PostMapping("/findid")

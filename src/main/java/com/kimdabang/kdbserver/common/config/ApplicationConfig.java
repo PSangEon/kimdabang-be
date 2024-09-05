@@ -21,9 +21,9 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return email -> {
-            return userRepository.findByEmail(email).orElseThrow(
-                    () -> new IllegalArgumentException("해당 이메일을 가진 회원이 없습니다.")
+        return loginId -> {
+            return userRepository.findByLoginId(loginId).orElseThrow(
+                    () -> new IllegalArgumentException("해당 회원이 없습니다.")
             );
         };
     }
