@@ -1,4 +1,4 @@
-package com.kimdabang.kdbserver.Star.vo;
+package com.kimdabang.kdbserver.Star.vo.in;
 
 import lombok.Getter;
 import lombok.ToString;

@@ -1,11 +1,10 @@
-package com.kimdabang.kdbserver.Star.dto;
+package com.kimdabang.kdbserver.Star.dto.in;
 
 import lombok.*;
 
 import java.util.Date;
 
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

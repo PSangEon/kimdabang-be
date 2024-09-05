@@ -1,10 +1,9 @@
-package com.kimdabang.kdbserver.Star.dto;
+package com.kimdabang.kdbserver.Star.dto.in;
 
 import com.kimdabang.kdbserver.Star.domain.Star;
 import lombok.*;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter

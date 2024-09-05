@@ -1,9 +1,10 @@
 package com.kimdabang.kdbserver.Star.application;
 
 import com.kimdabang.kdbserver.Star.domain.Star;
+import com.kimdabang.kdbserver.Star.dto.out.StarAmountResponseDto;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
-import com.kimdabang.kdbserver.Star.dto.StarAddRequestDto;
-import com.kimdabang.kdbserver.Star.dto.StarResponseDto;
+import com.kimdabang.kdbserver.Star.dto.in.StarAddRequestDto;
+import com.kimdabang.kdbserver.Star.dto.out.StarResponseDto;
 import com.kimdabang.kdbserver.Star.infrastructure.StarRepository;
 import com.kimdabang.kdbserver.Star.infrastructure.StarRepositoryCustom;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -63,5 +63,16 @@ public class StarServiceImpl implements StarService {
         for(int i = 0; i< starAddRequestDto.getStarAmount(); i++) {
             starRepository.save(starAddRequestDto.toEntity(uuid, now));
         }
+    }
+    public StarAmountResponseDto getStarAmount(String Authorization) {
+        String uuid = jwtTokenProvider.useToken(Authorization);
+        List<Star> stars = starRepository.findByUuid(uuid);
+        Long nstar = stars.stream().filter(star -> star.getIsEcho().equals(false)).count();
+        Long estar = stars.stream().filter(star -> star.getIsEcho().equals(true)).count();
+        return StarAmountResponseDto.builder()
+                .starAmount(nstar)
+                .greenStarAmount(estar)
+                .build();
+
     }
 }
