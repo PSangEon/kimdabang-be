@@ -54,6 +54,9 @@ public class CouponServiceImpl implements CouponService {
                 .couponType(getCoupon.getCouponType())
                 .expiredDate(getCoupon.getExpiredDate())
                 .value(getCoupon.getValue())
+                .validityYear(getCoupon.getValidityYear())
+                .validityMonth(getCoupon.getValidityMonth())
+                .validityDay(getCoupon.getValidityDay())
                 .build();
     }
 
@@ -68,6 +71,9 @@ public class CouponServiceImpl implements CouponService {
                             .couponType(coupon.getCouponType())
                             .expiredDate(coupon.getExpiredDate())
                             .value(coupon.getValue())
+                            .validityYear(coupon.getValidityYear())
+                            .validityMonth(coupon.getValidityMonth())
+                            .validityDay(coupon.getValidityDay())
                             .build())
                     .toList();
     }
