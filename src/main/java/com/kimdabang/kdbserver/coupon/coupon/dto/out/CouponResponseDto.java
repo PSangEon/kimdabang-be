@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.Period;
 
 @Getter
 public class CouponResponseDto {
@@ -15,6 +16,9 @@ public class CouponResponseDto {
     private CouponType couponType;
     private LocalDateTime expiredDate;
     private int value;
+    private Period validityYear;
+    private Period validityMonth;
+    private Period validityDay;
 
     public CouponResponseVo toResponseVo() {
         return CouponResponseVo.builder()
@@ -23,15 +27,21 @@ public class CouponResponseDto {
                 .couponType(couponType)
                 .expiredDate(expiredDate)
                 .value(value)
+                .validityYear(validityYear)
+                .validityMonth(validityMonth)
+                .validityDay(validityDay)
                 .build();
     }
 
     @Builder
-    public CouponResponseDto(Long id, String name, CouponType couponType, LocalDateTime expiredDate, int value) {
+    public CouponResponseDto(Long id, String name, CouponType couponType, LocalDateTime expiredDate, int value, Period validityYear, Period validityMonth, Period validityDay) {
         this.id = id;
         this.name = name;
         this.couponType = couponType;
         this.expiredDate = expiredDate;
         this.value = value;
+        this.validityYear = validityYear;
+        this.validityMonth = validityMonth;
+        this.validityDay = validityDay;
     }
 }
