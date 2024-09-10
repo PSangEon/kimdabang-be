@@ -1,4 +1,4 @@
-package com.kimdabang.kdbserver.notification.notification.domain;
+package com.kimdabang.kdbserver.notification.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,8 +32,8 @@ public class Notification {
     @Column(nullable = false)
     private Date expireDate;
 
-    @Comment("공지 상세설명")
-    @Column(nullable = true, length = 20)
-    private String description;
+    @Comment("공지 미디어url")
+    @Column(nullable = false, length = 100)
+    private String mediaUrl;
 
 }

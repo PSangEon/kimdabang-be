@@ -1,4 +1,4 @@
-package com.kimdabang.kdbserver.notification.notification.vo.out;
+package com.kimdabang.kdbserver.notification.vo.out;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +12,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotificationResponseVo {
-
+    private Long id;
     private String title;
     private Date activeDate;
     private Date expireDate;
-    private String description;
+    private String mediaUrl;
 
 }

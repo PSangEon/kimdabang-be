@@ -1,7 +1,7 @@
-package com.kimdabang.kdbserver.notification.notification.infrastructure;
+package com.kimdabang.kdbserver.notification.infrastructure;
 
-import com.kimdabang.kdbserver.notification.notification.domain.Notification;
-import com.kimdabang.kdbserver.notification.notification.domain.QNotification;
+import com.kimdabang.kdbserver.notification.domain.Notification;
+import com.kimdabang.kdbserver.notification.domain.QNotification;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -17,10 +17,10 @@ public class NotificationRepositoryCustomImpl implements NotificationRepositoryC
 
     @Override
     public List<Notification> getNotificationWithDate(Date start, Date end) {
-        QNotification notifiaction = QNotification.notification;
+        QNotification qNotification = QNotification.notification;
 
-        return jpaQueryFactory.selectFrom(notifiaction)
-                .where(notifiaction.expireDate.between(start, end))
+        return jpaQueryFactory.selectFrom(qNotification)
+                .where(qNotification.expireDate.between(start, end))
                 .fetch();
     }
 

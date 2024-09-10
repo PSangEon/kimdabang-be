@@ -1,6 +1,6 @@
-package com.kimdabang.kdbserver.notification.notification.infrastructure;
+package com.kimdabang.kdbserver.notification.infrastructure;
 
-import com.kimdabang.kdbserver.notification.notification.domain.Notification;
+import com.kimdabang.kdbserver.notification.domain.Notification;
 
 import java.util.Date;
 import java.util.List;
