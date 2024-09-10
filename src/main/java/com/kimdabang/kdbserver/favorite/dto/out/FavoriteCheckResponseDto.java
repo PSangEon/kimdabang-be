@@ -16,7 +16,7 @@ public class FavoriteCheckResponseDto {
     }
 
     @Builder
-    public FavoriteCheckResponseDto(boolean isFavorite) {
+    public FavoriteCheckResponseDto(Boolean isFavorite) {
 
         this.isFavorite = isFavorite;
 

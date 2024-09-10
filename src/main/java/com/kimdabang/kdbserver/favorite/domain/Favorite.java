@@ -30,10 +30,13 @@ public class Favorite extends BaseEntity {
 
     @Comment("좋아요 취소 여부")
     @Column(nullable = false)
-    private boolean isCanceled = true;
+    private Boolean isCanceled = false;
 
     public void change() {
         this.isCanceled = !this.isCanceled;
     }
 
+    public boolean isCanceled() {
+        return this.isCanceled;
+    }
 }

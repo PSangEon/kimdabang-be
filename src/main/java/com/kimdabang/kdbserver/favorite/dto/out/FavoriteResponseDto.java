@@ -10,7 +10,7 @@ public class FavoriteResponseDto {
     private Long id;
     private String productCode;
     private String userUuid;
-    private boolean isCanceled;
+    private Boolean isCanceled;
 
     public FavoriteResponseVo toFavoriteResponseVo() {
         return FavoriteResponseVo.builder()
@@ -22,7 +22,7 @@ public class FavoriteResponseDto {
     }
 
     @Builder
-    public FavoriteResponseDto(Long id, String productCode, String userUuid, boolean isCanceled) {
+    public FavoriteResponseDto(Long id, String productCode, String userUuid, Boolean isCanceled) {
 
         this.id = id;
         this.productCode = productCode;
