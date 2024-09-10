@@ -70,7 +70,7 @@ public class ProductMediaController {
 
 //    @GetMapping("/{productMediaId}")
 //    public CommonResponseEntity<ProductMediaResponseVo> getProductMedia(
-//            @PathVariable String productMediaId) {
+//            @PathVariable Long productMediaId) {
 //        ProductMediaResponseDto productMediaResponseDto = productMediaService.getProductMedia(productMediaId);
 //
 //        return new CommonResponseEntity<>(

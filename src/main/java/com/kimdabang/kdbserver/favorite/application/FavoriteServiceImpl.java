@@ -4,11 +4,14 @@ import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.favorite.domain.Favorite;
 import com.kimdabang.kdbserver.favorite.dto.in.FavoriteRequestDto;
 import com.kimdabang.kdbserver.favorite.dto.out.FavoriteCheckResponseDto;
+import com.kimdabang.kdbserver.favorite.dto.out.FavoriteResponseDto;
 import com.kimdabang.kdbserver.favorite.infrastructure.FavoriteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -19,7 +22,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public FavoriteCheckResponseDto getFavorite(String productCode, String Authorization) {
+    public FavoriteCheckResponseDto getFavoriteCheck(String productCode, String Authorization) {
 
         String userUuid = jwtTokenProvider.useToken(Authorization);
 
@@ -67,7 +70,13 @@ public class FavoriteServiceImpl implements FavoriteService {
         Favorite favorite = favoriteRepository.findByProductCodeAndUserUuid(favoriteDto.getProductCode(), userUuid)
                 .orElseThrow(() -> new EntityNotFoundException("Favorite not found with productCode and UserUuid: " + favoriteDto.getProductCode() + ", " + userUuid));
 
-        favorite.change();
+        boolean favoriteStatus;
+
+        if (favorite == null) {
+            addFavorite(favoriteDto);
+        } else {
+            favorite.change();
+        }
 
         favoriteRepository.save(favoriteDto.toFavoriteEntity(userUuid));
 
