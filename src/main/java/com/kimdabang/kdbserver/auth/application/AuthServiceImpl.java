@@ -38,25 +38,17 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public SignInResponseDto signIn(SignInRequestDto signInRequestDto) {
-
-        log.info("signInRequestDto : {}", signInRequestDto);
-        User user = authRepository.findByLoginId(signInRequestDto.getLoginId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 아이디를 가진 회원이 없습니다.")
-        );
-        log.info("user : {}", user);
-
         try {
            Authentication authentication =
                    authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            user.getEmail(),
-                            //todo Email-> loginid로 바꾸기
+                            signInRequestDto.getLoginId(),
                             signInRequestDto.getPassword()
                     )
            );
            return SignInResponseDto.builder()
                    .accessToken(createToken(authentication))
-                   .name(user.getName())
+                   .name(authentication.getName())
                    .build();
         } catch (Exception e) {
             throw new IllegalArgumentException("로그인 실패");
@@ -92,8 +84,7 @@ public class AuthServiceImpl implements AuthService{
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            user.getEmail(),
-                            //todo Email-> loginid로 바꾸기
+                            user.getLoginId(),
                             passwordRequestDto.getPassword()
                             )
                     );
@@ -107,6 +98,29 @@ public class AuthServiceImpl implements AuthService{
         }
     }
 
+//    @Override
+//    public SignInResponseDto kakoLogin(KakaoLoginRequestDto kakaoLoginRequestDto) {
+//        User user = authRepository.findByKakaoId(kakaoLoginRequestDto.getProviderAccountId()).orElse(null);
+//        if (user != null) {
+//            try {
+//                Authentication authentication =
+//                        authenticationManager.authenticate(
+//                                new UsernamePasswordAuthenticationToken(
+//                                        user.getLoginId(),
+//                                        user.getId()
+//                                )
+//                        );
+//                return SignInResponseDto.builder()
+//                        .accessToken(createToken(authentication))
+//                        .name(user.getName())
+//                        .build();
+//            } catch (Exception e) {
+//                throw new IllegalArgumentException("로그인 실패");
+//            }
+//        }
+//        throw new IllegalArgumentException("카카오 아이디로 가입된 정보가 없습니다");
+//    }
+
     @Override
     public TestTokenResponseDto testToken(TestTokenRequestDto testTokenRequestDto) {
         String uuid = jwtTokenProvider.useToken(testTokenRequestDto.getAccessToken());
@@ -118,7 +132,5 @@ public class AuthServiceImpl implements AuthService{
         return jwtTokenProvider.generateAccessToken(authentication);
         //return jwtTokenProvider.generateAccessToken(uuid);
     }
-
-
 
 }

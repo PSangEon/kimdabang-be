@@ -12,6 +12,7 @@ public class SignUpRequestVo {
 
     private String loginId;
     private String password;
+    private String kakaoId;
     private String name;
     private String email;
     private String phone;

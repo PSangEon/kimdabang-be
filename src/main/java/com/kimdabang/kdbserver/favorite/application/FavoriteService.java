@@ -12,6 +12,7 @@ public interface FavoriteService {
     void putFavorite(FavoriteRequestDto favoriteRequestDto);
     FavoriteCheckResponseDto getFavoriteCheck(String productCode, String Authorization);
 //    List<FavoriteResponseDto> getAllFavorites(String Authorization);
+
     // todo: Category 구현 후 유효한 좋아요 리스트 api 개발
     //    List<FavoriteResponseDto> getAllValidFavorite;
 

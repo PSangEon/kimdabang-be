@@ -32,6 +32,7 @@ public class Favorite extends BaseEntity {
     @Column(nullable = false)
     private Boolean isCanceled = false;
 
+
     public void change() {
         this.isCanceled = !this.isCanceled;
     }
