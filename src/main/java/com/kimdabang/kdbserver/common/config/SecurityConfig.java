@@ -51,6 +51,7 @@ public class SecurityConfig {
                                        "/api/v1/userstar/**",
                                        "/api/v1/useraddress/**",
                                        "/api/v1/notification/**",
+                                       "/api/v1/restock/**",
                                        "/error"
                                )
                                .permitAll()

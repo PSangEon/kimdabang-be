@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -21,26 +22,36 @@ public class UserEnrollCoupon extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("고객 쿠폰 pk")
     private Long id;
-    @Comment("고객 id")
+
+    @Comment("고객 uuid")
     @Column(nullable = false)
-    private String userUuid;
+    private String uuid;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
+
+    @Comment("쿠폰 등록일")
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
     @Comment("사용 여부")
     @Column(nullable = false)
     private Boolean isUsed;
+
     @Comment("사용 일시")
     private LocalDateTime usedAt;
+
     @Comment("쿠폰 만료일")
     @Column(nullable = false)
     private LocalDateTime expiredDate;
 
     @Builder
-    public UserEnrollCoupon(Long id, String userUuid, Coupon coupon, Boolean isUsed, LocalDateTime usedAt, LocalDateTime expiredDate) {
+    public UserEnrollCoupon(Long id, String uuid, Coupon coupon, LocalDateTime createdAt, Boolean isUsed, LocalDateTime usedAt, LocalDateTime expiredDate) {
         this.id = id;
-        this.userUuid = userUuid;
+        this.uuid = uuid;
         this.coupon = coupon;
+        this.createdAt = createdAt;
         this.isUsed = isUsed;
         this.usedAt = usedAt;
         this.expiredDate = expiredDate;

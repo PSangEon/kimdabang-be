@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
+import java.time.Period;
 
 @Getter
 @Entity
@@ -35,12 +36,27 @@ public class Coupon extends BaseEntity {
     @Comment("쿠폰 할인률/금액")
     private int value;
 
+    @Comment("쿠폰 유효 기간(년)")
+    @Column(nullable = false)
+    private Period validityYear;
+
+    @Comment("쿠폰 유효 기간(월)")
+    @Column(nullable = false)
+    private Period validityMonth;
+
+    @Comment("쿠폰 유효 기간(일)")
+    @Column(nullable = false)
+    private Period validityDay;
+
     @Builder
-    public Coupon(Long id, String name, CouponType couponType, LocalDateTime expiredDate, int value) {
+    public Coupon(Long id, String name, CouponType couponType, LocalDateTime expiredDate, int value, Period validityYear, Period validityMonth, Period validityDay) {
         this.id = id;
         this.name = name;
         this.couponType = couponType;
         this.expiredDate = expiredDate;
         this.value = value;
+        this.validityYear = validityYear;
+        this.validityMonth = validityMonth;
+        this.validityDay = validityDay;
     }
 }
