@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RestockRequestVo {
-    private String accessToken;
     private String productCode;
 }

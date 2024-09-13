@@ -1,5 +1,6 @@
 package com.kimdabang.kdbserver.favorite.application;
 
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.favorite.domain.Favorite;
 import com.kimdabang.kdbserver.favorite.dto.in.FavoriteRequestDto;
@@ -12,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.FAVORITE_NOT_FOUND;
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @Slf4j
@@ -27,7 +31,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         String userUuid = jwtTokenProvider.useToken(Authorization);
 
         Favorite favorite = favoriteRepository.findByProductCodeAndUserUuid(productCode, userUuid)
-                .orElseThrow(() -> new EntityNotFoundException("Favorite not found"));
+                .orElseThrow(() -> new CustomException(FAVORITE_NOT_FOUND));
 
         boolean favoriteStatus;
 
@@ -48,11 +52,11 @@ public class FavoriteServiceImpl implements FavoriteService {
         Favorite favorite = favoriteRepository.findByProductCodeAndUserUuid(favoriteDto.getProductCode(), userUuid)
                 .orElseThrow(() -> {
                     if (!favoriteRepository.existsByProductCode(favoriteDto.getProductCode())) {
-                        throw new EntityNotFoundException("Favorite not found with productCode: " + favoriteDto.getProductCode());
+                        throw new CustomException(FAVORITE_NOT_FOUND);
                     }
 
                     if (!favoriteRepository.existsByUserUuid(userUuid)) {
-                        throw new EntityNotFoundException("Favorite not found with userUuid: " + userUuid);
+                        throw new CustomException(USER_NOT_FOUND);
                     }
 
                     return new EntityNotFoundException("Favorite not found with productCode and UserUuid: " + favoriteDto.getProductCode() + ", " + userUuid);

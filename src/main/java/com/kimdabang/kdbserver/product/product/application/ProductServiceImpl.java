@@ -1,6 +1,7 @@
 package com.kimdabang.kdbserver.product.product.application;
 
 
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.product.product.domain.Product;
 import com.kimdabang.kdbserver.product.product.dto.in.ProductRequestDto;
 import com.kimdabang.kdbserver.product.product.dto.out.ProductResponseDto;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.PRODUCT_NOT_FOUND;
 
 @Service
 @Slf4j
@@ -35,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateProduct(ProductRequestDto productDto) {
         productRepository.findByProductCode(productDto.getProductCode())
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(PRODUCT_NOT_FOUND));
 
         productRepository.save(productDto.toProductEntity(productDto.getProductCode()));
     }
@@ -43,14 +46,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(String productCode) {
         Product deleteProduct = productRepository.findByProductCode(productCode)
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(PRODUCT_NOT_FOUND));
         productRepository.delete(deleteProduct);
     }
 
     @Override
     public ProductResponseDto getProduct(String productCode) {
         Product getProduct = productRepository.findByProductCode(productCode)
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(PRODUCT_NOT_FOUND));
 
         return ProductResponseDto.builder()
                 .productCode(getProduct.getProductCode())

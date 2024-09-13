@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface RestockService {
     List<RestockResponseDto> getRestock(String Authorization);
-    void addRestock(RestockRequestDto restockRequestDto);
-    void deleteRestock(RestockRequestDto restockRequestDto);
+    void addRestock(RestockRequestDto restockRequestDto, String Authorization);
+    void deleteRestock(String productCode, String Authorization);
 }

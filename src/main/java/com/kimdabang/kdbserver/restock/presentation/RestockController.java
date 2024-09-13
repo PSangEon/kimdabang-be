@@ -26,12 +26,9 @@ public class RestockController {
     @Operation(summary = "RestockAdd API", description = "RestockAdd API 입니다.", tags = {"restock-controller"})
     @PostMapping("/add-restock")
     public CommonResponseEntity<Void> addRestock(
+            @RequestHeader ("Authorization") String Authorization,
             @RequestBody RestockRequestVo restockRequestVo) {
-        RestockRequestDto restockRequestDto = RestockRequestDto.builder()
-                .accessToken(restockRequestVo.getAccessToken())
-                .productCode(restockRequestVo.getProductCode())
-                .build();
-        restockService.addRestock(restockRequestDto);
+        restockService.addRestock(RestockRequestDto.toRequestDto(restockRequestVo), Authorization);
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
     @Operation(summary = "RestockGet API", description = "RestockGet API 입니다.", tags = {"restock-controller"})
@@ -42,7 +39,7 @@ public class RestockController {
                 restockService.getRestock(Authorization);
         return new CommonResponseEntity<>(
                 HttpStatus.OK,
-                "star 조회 성공",
+                "Restock 조회 성공",
                 restockResponseDtoList.stream()
                         .map(RestockResponseDto::toResponseVo)
                         .toList()
@@ -51,12 +48,9 @@ public class RestockController {
     @Operation(summary = "RestockDelete API", description = "RestockDelete API 입니다.", tags = {"restock-controller"})
     @DeleteMapping("/delete-restock")
     public CommonResponseEntity<Void> deleteRestock(
-            @RequestBody RestockRequestVo restockRequestVo) {
-        RestockRequestDto restockRequestDto = RestockRequestDto.builder()
-                .accessToken(restockRequestVo.getAccessToken())
-                .productCode(restockRequestVo.getProductCode())
-                .build();
-        restockService.deleteRestock(restockRequestDto);
+            @RequestHeader ("Authorization") String Authorization,
+            @RequestParam(value = "id") String productCode) {
+        restockService.deleteRestock(productCode, Authorization);
         return new CommonResponseEntity<>(HttpStatus.OK, CommonResponseMessage.SUCCESS.getMessage(), null);
     }
 }

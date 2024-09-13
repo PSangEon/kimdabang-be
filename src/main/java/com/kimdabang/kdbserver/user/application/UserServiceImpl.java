@@ -1,5 +1,6 @@
 package com.kimdabang.kdbserver.user.application;
 
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.user.domain.User;
 import com.kimdabang.kdbserver.user.dto.UserRequestDto;
@@ -8,6 +9,8 @@ import com.kimdabang.kdbserver.user.infrastructure.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.USER_NOT_FOUND;
 
 @Slf4j
 @Service
@@ -20,7 +23,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserResponseDto getUser(String accessToken) {
         User user = userRepository.findByUuid(jwtTokenProvider.useToken(accessToken)).orElseThrow(
-                () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
+                () -> new CustomException(USER_NOT_FOUND)
         );
         return UserResponseDto.builder()
                 .loginId(user.getLoginId())
@@ -39,7 +42,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void putUser(UserRequestDto userRequestDto,String accessToken) {
         User user = userRepository.findByUuid(jwtTokenProvider.useToken(accessToken)).orElseThrow(
-                () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
+                () -> new CustomException(USER_NOT_FOUND)
         );
 
         userRepository.save(userRequestDto.toEntity(userRequestDto, user));

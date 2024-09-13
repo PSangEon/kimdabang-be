@@ -1,5 +1,6 @@
 package com.kimdabang.kdbserver.coupon.coupon.application;
 
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.coupon.coupon.domain.Coupon;
 import com.kimdabang.kdbserver.coupon.coupon.dto.in.CouponAddRequestDto;
 import com.kimdabang.kdbserver.coupon.coupon.dto.in.CouponUpdateRequestDto;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.COUPON_NOT_FOUND;
 
 @Service
 @Slf4j
@@ -30,7 +33,7 @@ public class CouponServiceImpl implements CouponService {
     @Transactional
     public void updateCoupon(CouponUpdateRequestDto couponRequestUpdateDto) {
         couponRepository.findById(couponRequestUpdateDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(COUPON_NOT_FOUND));
 
         couponRepository.save(couponRequestUpdateDto.toEntity());
     }
@@ -39,7 +42,7 @@ public class CouponServiceImpl implements CouponService {
     @Transactional
     public void deleteCoupon(Long id) {
         Coupon deleteCoupon = couponRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(COUPON_NOT_FOUND));
 
         couponRepository.delete(deleteCoupon);
     }
@@ -47,7 +50,7 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public CouponResponseDto getOneCoupon(Long id) {
         Coupon getCoupon = couponRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(COUPON_NOT_FOUND));
 
         return CouponResponseDto.builder()
                 .id(getCoupon.getId())

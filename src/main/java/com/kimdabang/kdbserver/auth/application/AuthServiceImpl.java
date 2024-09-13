@@ -7,6 +7,7 @@ import com.kimdabang.kdbserver.auth.dto.out.KeyResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.SignInResponseDto;
 import com.kimdabang.kdbserver.auth.dto.out.TestTokenResponseDto;
 import com.kimdabang.kdbserver.auth.infrastructure.AuthRepository;
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class AuthServiceImpl implements AuthService{
     public void signUp(SignUpRequestDto signUpRequestDto) {
         User findUser = authRepository.findByLoginId(signUpRequestDto.getLoginId()).orElse(null);
         if (findUser != null) {
-            throw new IllegalArgumentException("이미 가입된 회원입니다.");
+            throw new CustomException(DUPLICATED_LOGIN_ID);
         }
         User user = authRepository.save(signUpRequestDto.toEntity(passwordEncoder));
         agreementRepository.save(signUpRequestDto.toAgreement(user));
@@ -44,8 +47,9 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public SignInResponseDto signIn(SignInRequestDto signInRequestDto) {
 
-        User findUser = authRepository.findByLoginId(signInRequestDto.getLoginId()).orElse(null);
-
+        User findUser = authRepository.findByLoginId(signInRequestDto.getLoginId()).orElseThrow(
+                () -> new CustomException(USER_NOT_FOUND)
+        );
         try {
            Authentication authentication =
                    authenticationManager.authenticate(
@@ -59,26 +63,25 @@ public class AuthServiceImpl implements AuthService{
                    .name(findUser.getNickname())
                    .build();
         } catch (Exception e) {
-            throw new IllegalArgumentException("로그인 실패");
+            throw new CustomException(BAD_CREDENTIALS);
         }
     }
 
     @Override
     public LoginIdFindResponseDto findEmail(KeyRequestDto keyRequestDto) {
-        User user = authRepository.findByEmail(keyRequestDto.getKey()).orElse(null);
-        if (user != null) {
-            return LoginIdFindResponseDto.builder()
+        User user = authRepository.findByEmail(keyRequestDto.getKey()).orElseThrow(
+                () -> new CustomException(USER_NOT_FOUND)
+        );
+        return LoginIdFindResponseDto.builder()
                     .loginId(user.getLoginId())
                     .build();
-        }
-        throw new IllegalArgumentException("일치하는 이메일이 없습니다");
     }
 
     @Override
     public void putPassword(KeyRequestDto keyRequestDto, String accessToken) {
         String uuid = jwtTokenProvider.useToken(accessToken);
         User user = authRepository.findByUuid(uuid).orElseThrow(
-                () -> new IllegalArgumentException("회원을 찾을 수 없습니다.")
+                () -> new CustomException(USER_NOT_FOUND)
         );
         user.updatePassword(passwordEncoder.encode(keyRequestDto.getKey()));
         authRepository.save(user);
