@@ -1,5 +1,6 @@
 package com.kimdabang.kdbserver.season.mediaList.application;
 
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.season.mediaList.domain.SeasonMediaList;
 import com.kimdabang.kdbserver.season.mediaList.dto.in.SeasonMediaListAddRequestDto;
 import com.kimdabang.kdbserver.season.mediaList.dto.in.SeasonMediaListUpdateRequestDto;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.SEASON_NOT_FOUND;
+
 @Service
 @Slf4j
 @Transactional(readOnly = true)
@@ -27,7 +30,7 @@ public class SeasonMediaListServiceImpl implements SeasonMediaListService {
     @Transactional
     public void addSeasonMediaList(SeasonMediaListAddRequestDto seasonMediaListRequestDto) {
         Season season = seasonRepository.findById(seasonMediaListRequestDto.getSeasonId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 시즌이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(SEASON_NOT_FOUND));
 
         seasonMediaListRepository.save(seasonMediaListRequestDto.toEntity(season));
     }

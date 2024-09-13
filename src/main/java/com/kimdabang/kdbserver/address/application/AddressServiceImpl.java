@@ -1,7 +1,7 @@
 package com.kimdabang.kdbserver.address.application;
 
 import com.kimdabang.kdbserver.address.domain.Address;
-import com.kimdabang.kdbserver.auth.infrastructure.AuthRepository;
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.address.dto.AddressAddRequestDto;
 import com.kimdabang.kdbserver.address.dto.AddressRequestDto;
@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressResponseDto getAddress(Long id, String Authorization){
         String uuid = jwtTokenProvider.useToken(Authorization);
         Address address = addressRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("주소를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(DATA_NOT_FOUND));
         log.info("address: {}", address);
         if(address.getUserUuid().equals(uuid)) {
             return AddressResponseDto.toResponseDto(address);
@@ -48,7 +50,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressResponseDto getAddressDefault(String Authorization){
         List<Address> addresses = addressRepository.findByUserUuid(jwtTokenProvider.useToken(Authorization));
         Address defaultAddress = addresses.stream().filter(address  -> address.getIsDefault().equals(true)).findFirst()  // 첫 번째 값을 가져옵니다.
-                .orElseThrow(() -> new IllegalArgumentException("기본 주소가 없습니다."));  // 기본 주소가 없을 경우 예외 처리
+                .orElseThrow(() -> new CustomException(DATA_NOT_FOUND));  // 기본 주소가 없을 경우 예외 처리
             return AddressResponseDto.toResponseDto(defaultAddress);
     }
     @Override
@@ -86,7 +88,7 @@ public class AddressServiceImpl implements AddressService {
         }
         else {
             if(address.getIsDefault()) { //기본 주소 비활성화 예외 처리
-                throw new IllegalArgumentException("기본 주소는 비활성화 할 수 없습니다.");
+                throw new CustomException(ADDREESS_IS_DEFAULT);
             }
         }
             addressRepository.save(addressRequestDto.toEntity(addressRequestDto, uuid));
@@ -95,7 +97,7 @@ public class AddressServiceImpl implements AddressService {
     public void deleteAddress(Long id, String Authorization) {
         String uuid = jwtTokenProvider.useToken(Authorization);
         Address deleteAddress = addressRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 주소가 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(DATA_NOT_FOUND));
         if(deleteAddress.getIsDefault().equals(true))
         {
             //기본 주소 자동 갱신 처리
@@ -105,13 +107,13 @@ public class AddressServiceImpl implements AddressService {
 //            addressRepository.save(address);
 
             //기본 주소 삭제 예외 처리
-            throw new IllegalArgumentException("기본 주소는 삭제 할 수 없습니다.");
+            throw new CustomException(ADDREESS_IS_DEFAULT);
         }
         if(deleteAddress.getUserUuid().equals(uuid)) {
             addressRepository.delete(deleteAddress);
         }
         else {
-            throw new IllegalArgumentException("잘못된 접근입니다.");
+            throw new CustomException(BAD_USER_REQUEST);
         }
     }
 }

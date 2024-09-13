@@ -1,5 +1,6 @@
 package com.kimdabang.kdbserver.season.season.application;
 
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.season.season.domain.Season;
 import com.kimdabang.kdbserver.season.season.dto.in.SeasonAddRequestDto;
 import com.kimdabang.kdbserver.season.season.dto.in.SeasonUpdateRequestDto;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.SEASON_NOT_FOUND;
 
 @Service
 @Slf4j
@@ -30,7 +33,7 @@ public class SeasonServiceImpl implements SeasonService {
     @Transactional
     public void updateSeason(SeasonUpdateRequestDto seasonUpdateRequestDto) {
         seasonRepository.findById(seasonUpdateRequestDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 시즌이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(SEASON_NOT_FOUND));
 
         seasonRepository.save(seasonUpdateRequestDto.toEntity());
     }
@@ -39,7 +42,7 @@ public class SeasonServiceImpl implements SeasonService {
     @Transactional
     public void deleteSeason(Long id) {
         Season deleteSeason = seasonRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 시즌이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(SEASON_NOT_FOUND));
 
         seasonRepository.delete(deleteSeason);
     }
@@ -47,7 +50,7 @@ public class SeasonServiceImpl implements SeasonService {
     @Override
     public SeasonResponseDto getOneSeason(Long id) {
         Season getSeason = seasonRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 시즌이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(SEASON_NOT_FOUND));
         return SeasonResponseDto.builder()
                 .id(getSeason.getId())
                 .name(getSeason.getName())

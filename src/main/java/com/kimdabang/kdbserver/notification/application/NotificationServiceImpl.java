@@ -1,5 +1,6 @@
 package com.kimdabang.kdbserver.notification.application;
 
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.notification.domain.Notification;
 import com.kimdabang.kdbserver.notification.dto.in.NotificationRequestDto;
 import com.kimdabang.kdbserver.notification.dto.out.NotificationResponseDto;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.DATA_NOT_FOUND;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -48,7 +51,7 @@ public class NotificationServiceImpl implements NotificationService{
     @Override
     public void deleteNotification(Long id) {
         Notification notification = notificationRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 공지가 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(DATA_NOT_FOUND));
         notificationRepository.delete(notification);
     }
 }

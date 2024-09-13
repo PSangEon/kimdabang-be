@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface RestockRepository extends JpaRepository<Restock, Long> {
     List<Restock> findByUuid(String uuid);
-    Optional<Restock> findByProductCode(String productCode);
+    Optional<Restock> findByUuidAndProductCode(String uuid, String productCode);
 }

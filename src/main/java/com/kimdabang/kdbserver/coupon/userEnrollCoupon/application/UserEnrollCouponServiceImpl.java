@@ -1,5 +1,6 @@
 package com.kimdabang.kdbserver.coupon.userEnrollCoupon.application;
 
+import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
 import com.kimdabang.kdbserver.coupon.coupon.domain.Coupon;
 import com.kimdabang.kdbserver.coupon.coupon.infrastructure.CouponRepository;
@@ -15,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.COUPON_NOT_ENROLL;
+import static com.kimdabang.kdbserver.common.exception.ErrorCode.COUPON_NOT_FOUND;
 
 @Service
 @Slf4j
@@ -33,7 +37,7 @@ public class UserEnrollCouponServiceImpl implements UserEnrollCouponService {
         String uuid = jwtTokenProvider.useToken(userEnrollCouponAddRequestDto.getAccessToken());
 
         Coupon coupon = couponRepository.findById(userEnrollCouponAddRequestDto.getCouponId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(COUPON_NOT_FOUND));
 
         LocalDateTime toolTime = LocalDateTime.now().plus(coupon.getValidityYear()).plus(coupon.getValidityMonth()).plus(coupon.getValidityDay());
         LocalDateTime expiredDate = coupon.getExpiredDate();
@@ -49,7 +53,7 @@ public class UserEnrollCouponServiceImpl implements UserEnrollCouponService {
     @Transactional
     public void updateUserEnrollCoupon(UserEnrollCouponUpdateRequestDto userEnrollCouponRequestDto) {
         UserEnrollCoupon userEnrollCoupon = userEnrollCouponRepository.findById(userEnrollCouponRequestDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰이 등록되지 않았습니다."));
+                .orElseThrow(() -> new CustomException(COUPON_NOT_ENROLL));
         userEnrollCouponRepository.save(userEnrollCouponRequestDto.toEntity(userEnrollCoupon));
     }
 
@@ -57,14 +61,14 @@ public class UserEnrollCouponServiceImpl implements UserEnrollCouponService {
     @Transactional
     public void deleteUserEnrollCoupon(Long id) {
         UserEnrollCoupon deleteUserEnrollCoupon = userEnrollCouponRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰이 등록되지 않았습니다."));
+                .orElseThrow(() -> new CustomException(COUPON_NOT_ENROLL));
         userEnrollCouponRepository.delete(deleteUserEnrollCoupon);
     }
 
     @Override
     public UserEnrollCouponResponseDto getOneUserEnrollCoupon(Long id) {
         UserEnrollCoupon userEnrollCoupon = userEnrollCouponRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰이 등록되지 않았습니다."));
+                .orElseThrow(() -> new CustomException(COUPON_NOT_ENROLL));
         return UserEnrollCouponResponseDto.builder()
                 .id(userEnrollCoupon.getId())
                 .uuid(userEnrollCoupon.getUuid())

@@ -1,6 +1,7 @@
 package com.kimdabang.kdbserver.restock.dto.in;
 
 import com.kimdabang.kdbserver.restock.domain.Restock;
+import com.kimdabang.kdbserver.restock.vo.in.RestockRequestVo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,8 +15,13 @@ import java.util.Date;
 @NoArgsConstructor
 public class RestockRequestDto {
 
-    private String accessToken;
     private String productCode;
+
+    public static RestockRequestDto toRequestDto(RestockRequestVo restockRequestVo) {
+        return RestockRequestDto.builder()
+                .productCode(restockRequestVo.getProductCode())
+                .build();
+    }
 
     public Restock toEntity(String uuid) {
         return Restock.builder()
