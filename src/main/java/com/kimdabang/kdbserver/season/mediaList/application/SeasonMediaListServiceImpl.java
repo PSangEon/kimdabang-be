@@ -1,7 +1,9 @@
 package com.kimdabang.kdbserver.season.mediaList.application;
 
 import com.kimdabang.kdbserver.common.exception.CustomException;
-import com.kimdabang.kdbserver.season.mediaList.dto.in.SeasonMediaListRequestDto;
+import com.kimdabang.kdbserver.season.mediaList.domain.SeasonMediaList;
+import com.kimdabang.kdbserver.season.mediaList.dto.in.SeasonMediaListAddRequestDto;
+import com.kimdabang.kdbserver.season.mediaList.dto.in.SeasonMediaListUpdateRequestDto;
 import com.kimdabang.kdbserver.season.mediaList.dto.out.SeasonMediaListResponseDto;
 import com.kimdabang.kdbserver.season.mediaList.infrastructure.SeasonMediaListRepository;
 import com.kimdabang.kdbserver.season.season.domain.Season;
@@ -26,7 +28,7 @@ public class SeasonMediaListServiceImpl implements SeasonMediaListService {
 
     @Override
     @Transactional
-    public void addSeasonMediaList(SeasonMediaListRequestDto seasonMediaListRequestDto) {
+    public void addSeasonMediaList(SeasonMediaListAddRequestDto seasonMediaListRequestDto) {
         Season season = seasonRepository.findById(seasonMediaListRequestDto.getSeasonId())
                 .orElseThrow(() -> new CustomException(SEASON_NOT_FOUND));
 
@@ -35,23 +37,29 @@ public class SeasonMediaListServiceImpl implements SeasonMediaListService {
 
     @Override
     @Transactional
-    public void updateSeasonMediaList(SeasonMediaListRequestDto seasonMediaListRequestDto) {
-
+    public void updateSeasonMediaList(SeasonMediaListUpdateRequestDto seasonMediaListUpdateRequestDto) {
+        SeasonMediaList seasonMediaList = seasonMediaListRepository.findById(seasonMediaListUpdateRequestDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 시즌의 미디어가 존재하지 않습니다."));
+        seasonMediaListRepository.save(seasonMediaListUpdateRequestDto.toEntity(seasonMediaList));
     }
 
     @Override
     @Transactional
     public void deleteSeasonMediaList(Long id) {
-
+        SeasonMediaList deleteSeasonMediaList = seasonMediaListRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 시즌의 미디어가 존재하지 않습니다."));
+        seasonMediaListRepository.delete(deleteSeasonMediaList);
     }
 
     @Override
     public SeasonMediaListResponseDto getOneSeasonMediaList(Long id) {
+        // TODO: 9/13/24  
         return null;
     }
 
     @Override
     public List<SeasonMediaListResponseDto> getAllSeasonMediaList() {
+        // TODO: 9/13/24  
         return null;
     }
 }
