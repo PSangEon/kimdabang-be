@@ -71,5 +71,5 @@ jobs:
           sudo docker stop kimgane
           sudo docker rm kimgane
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/kimgane
-          sudo docker run -d —name kimgane -p 10243:8080 ${{ secrets.DOCKER_USERNAME }}/kimgane
+          sudo docker run -d --name kimgane -p 10243:8080 ${{ secrets.DOCKER_USERNAME }}/kimgane
           sudo docker image prune -f
