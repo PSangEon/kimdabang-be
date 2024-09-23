@@ -56,8 +56,8 @@ jobs:
     - name: Docker build & push to prod
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO }}/novels-prod .
-          docker push ${{ secrets.DOCKER_REPO }}/novels-prod
+          docker build -t ${{ secrets.DOCKER_REPO }}/kimgane .
+          docker push ${{ secrets.DOCKER_REPO }}/kimgane
           
     ## deploy to production
     - name: Deploy to prod
@@ -69,8 +69,8 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         envs: GITHUB_SHA
         script: |
-          sudo docker stop novels-prod
-          sudo docker rm novels-prod
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/novels-prod
-          sudo docker run -d —name novels-prod -p 8095:8095 —network bts-network ${{ secrets.DOCKER_USERNAME }}/novels-prod
+          sudo docker stop kimgane
+          sudo docker rm kimgane
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/kimgane
+          sudo docker run -d —name kimgane -p 10243:8080 ${{ secrets.DOCKER_USERNAME }}/kimgane
           sudo docker image prune -f
