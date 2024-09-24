@@ -4,6 +4,7 @@ import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
 import com.kimdabang.kdbserver.product.detail.application.ProductDetailService;
 import com.kimdabang.kdbserver.product.detail.dto.ProductDetailRequestDto;
 import com.kimdabang.kdbserver.product.detail.dto.ProductDetailResponseDto;
+import com.kimdabang.kdbserver.product.detail.vo.ProductDetailRequestVo;
 import com.kimdabang.kdbserver.product.detail.vo.ProductDetailResponseVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +31,9 @@ public class ProductDetailController {
         );
     }
     @PostMapping("/add-detail")
-    public CommonResponseEntity<ProductDetailResponseVo> addProductDetail(
-            @RequestBody ProductDetailRequestDto productDetailRequestDto) {
-            productDetailService.addProductDetail(productDetailRequestDto);
+    public CommonResponseEntity<Void> addProductDetail(
+            @RequestBody ProductDetailRequestVo productDetailRequestVo) {
+            productDetailService.addProductDetail(ProductDetailRequestDto.toRequestDto(productDetailRequestVo));
 
         return new CommonResponseEntity<>(
                 HttpStatus.OK,
@@ -41,9 +42,9 @@ public class ProductDetailController {
         );
     }
     @PutMapping("/put-detail")
-    public CommonResponseEntity<ProductDetailResponseVo> putProductDetail(
-            @RequestBody ProductDetailRequestDto productDetailRequestDto) {
-        productDetailService.putProductDetail(productDetailRequestDto);
+    public CommonResponseEntity<Void> putProductDetail(
+            @RequestBody ProductDetailRequestVo productDetailRequestVo) {
+        productDetailService.putProductDetail(ProductDetailRequestDto.toRequestDto(productDetailRequestVo));
 
         return new CommonResponseEntity<>(
                 HttpStatus.OK,

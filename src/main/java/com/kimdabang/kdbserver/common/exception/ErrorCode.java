@@ -36,6 +36,10 @@ public enum ErrorCode {
     SEASONMEDIA_NOT_FOUND(400, "SEASONMEDIA-001", "시즌미디어를 찾을 수 없습니다."),
     SEASONPRODUCT_NOT_FOUND(400, "SEASONPRODUCT-001", "시즌상품을 찾을 수 없습니다."),
 
+    PURCHASE_NOT_FOUND(400, "PURCHASE-001", "주문을 찾을 수 없습니다."),
+    PURCHASE_PROCESS_FAILED(401, "PURCHASE-002", "주문을 처리하지 못했습니다."),
+
+    PAYMENT_NOT_FOUND(400, "PAYMENT-001", "결제정보를 찾을 수 없습니다."),
     // 500 번대 에러
     INTERNAL_SERVER_ERROR(500, "COMMON-002", "서버에서 요청을 처리하지 못했습니다.");
 
