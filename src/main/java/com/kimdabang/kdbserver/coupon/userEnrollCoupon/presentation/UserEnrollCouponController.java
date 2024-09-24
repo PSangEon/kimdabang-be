@@ -1,9 +1,13 @@
 package com.kimdabang.kdbserver.coupon.userEnrollCoupon.presentation;
 
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
+import com.kimdabang.kdbserver.coupon.coupon.domain.Coupon;
+import com.kimdabang.kdbserver.coupon.coupon.dto.out.CouponResponseDto;
+import com.kimdabang.kdbserver.coupon.coupon.vo.CouponResponseVo;
 import com.kimdabang.kdbserver.coupon.userEnrollCoupon.application.UserEnrollCouponService;
 import com.kimdabang.kdbserver.coupon.userEnrollCoupon.dto.in.UserEnrollCouponAddRequestDto;
 import com.kimdabang.kdbserver.coupon.userEnrollCoupon.dto.in.UserEnrollCouponUpdateRequestDto;
+import com.kimdabang.kdbserver.coupon.userEnrollCoupon.dto.in.UserEnrollCouponUsingRequestDto;
 import com.kimdabang.kdbserver.coupon.userEnrollCoupon.dto.out.UserEnrollCouponResponseDto;
 import com.kimdabang.kdbserver.coupon.userEnrollCoupon.vo.UserEnrollCouponAddRequestVo;
 import com.kimdabang.kdbserver.coupon.userEnrollCoupon.vo.UserEnrollCouponResponseVo;
@@ -92,6 +96,50 @@ public class UserEnrollCouponController {
                 HttpStatus.OK,
                 "해당 유저가 등록한 쿠폰의 갯수",
                 countEnrollCoupon
+        );
+    }
+
+    @GetMapping("/not-enrolled-coupon")
+    public CommonResponseEntity<List<CouponResponseVo>> getNotEnrolledCoupon(@RequestHeader("Authorization") String Authorization) {
+        List<CouponResponseDto> couponResponseDtos = userEnrollCouponService.getNotEnrolledCoupon(Authorization);
+        List<CouponResponseVo> couponResponseVos = couponResponseDtos.stream()
+                .map(CouponResponseDto::toResponseVo)
+                .toList();
+        return new CommonResponseEntity<>(
+                HttpStatus.OK,
+                "등록되지 않은 쿠폰 조회 성공",
+                couponResponseVos
+        );
+    }
+
+    @GetMapping("/enrolled-coupon")
+    public CommonResponseEntity<List<UserEnrollCouponResponseVo>> getEnrolledCoupon(@RequestHeader("Authorization") String Authorization) {
+        List<UserEnrollCouponResponseDto> userEnrollCouponResponseDtos = userEnrollCouponService.getEnrolledCoupon(Authorization);
+        List<UserEnrollCouponResponseVo> userEnrollCouponResponseVos = userEnrollCouponResponseDtos.stream()
+                .map(UserEnrollCouponResponseDto::toResponseVo)
+                .toList();
+        return new CommonResponseEntity<>(
+                HttpStatus.OK,
+                "등록된 유효한 쿠폰 조회 성공",
+                userEnrollCouponResponseVos
+        );
+    }
+
+    @PutMapping("/using-coupon")
+    public CommonResponseEntity<Void> usingUserEnrollCoupon(
+            @RequestHeader("Authorization") String Authorization,
+            @RequestBody UserEnrollCouponUpdateRequestVo userEnrollCouponUpdateRequestVo) {
+        log.info("userEnrollCouponUpdateRequestVo = {}", userEnrollCouponUpdateRequestVo);
+        UserEnrollCouponUsingRequestDto userEnrollCouponUsingRequestDto = UserEnrollCouponUsingRequestDto.builder()
+                .id(userEnrollCouponUpdateRequestVo.getId())
+                .isUsed(userEnrollCouponUpdateRequestVo.getIsUsed())
+                .usedAt(userEnrollCouponUpdateRequestVo.getUsedAt())
+                .build();
+        userEnrollCouponService.usingUserEnrollCoupon(userEnrollCouponUsingRequestDto, Authorization);
+        return new CommonResponseEntity<>(
+                HttpStatus.OK,
+                "쿠폰 사용 성공",
+                null
         );
     }
 

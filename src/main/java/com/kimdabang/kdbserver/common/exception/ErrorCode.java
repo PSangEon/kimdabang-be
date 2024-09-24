@@ -40,7 +40,11 @@ public enum ErrorCode {
     PURCHASE_PROCESS_FAILED(401, "PURCHASE-002", "주문을 처리하지 못했습니다."),
 
     PAYMENT_NOT_FOUND(400, "PAYMENT-001", "결제정보를 찾을 수 없습니다."),
-    // 500 번대 에러
+
+    STARBUCKSCARD_NOT_FOUND(400, "STARBUCKSCARD-001", "스타벅스카드를 찾을 수 없습니다."),
+    STARBUCKSCARD_NOT_ENROLL(401, "STARBUCKSCARD-002", "스타벅스카드가 등록되지 않았습니다."),
+    STARBUCKSCARD_ALREADY_ENROLLED(402, "STARBUCKSCARD-003", "이미 등록된 스타벅스카드입니다."),
+
     INTERNAL_SERVER_ERROR(500, "COMMON-002", "서버에서 요청을 처리하지 못했습니다.");
 
 

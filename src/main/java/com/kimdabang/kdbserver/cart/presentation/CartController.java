@@ -5,6 +5,7 @@ import com.kimdabang.kdbserver.cart.dto.in.CartRequestDto;
 import com.kimdabang.kdbserver.cart.dto.out.CartCheckResponseDto;
 import com.kimdabang.kdbserver.cart.vo.CartCheckBoxResponseVo;
 import com.kimdabang.kdbserver.cart.vo.CartCheckResponseVo;
+import com.kimdabang.kdbserver.cart.vo.CartRequestVo;
 import com.kimdabang.kdbserver.cart.vo.CartResponseVo;
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
 import lombok.RequiredArgsConstructor;
@@ -40,13 +41,13 @@ public class CartController {
     public CommonResponseEntity<CartCheckResponseVo> updateCart(
             @RequestHeader ("Authorization") String Authorization,
             @PathVariable String productCode,
-            @RequestParam Integer amount,
-            @RequestParam(defaultValue = "0") Long productOptionId) {
+            @RequestBody CartRequestVo cartRequestVo) {
         CartRequestDto cartRequestDto = CartRequestDto.builder()
                 .productCode(productCode)
                 .accessToken(Authorization)
-                .amount(amount)
-                .productOptionId(productOptionId)
+                .amount(cartRequestVo.getAmount())
+                .productOptionId(cartRequestVo.getProductOptionId())
+                .carving(cartRequestVo.getCarving())
                 .build();
         CartCheckResponseVo cartCheckResponseVo = cartService.putCart(cartRequestDto);
 
@@ -65,6 +66,18 @@ public class CartController {
         return new CommonResponseEntity<>(
                 HttpStatus.OK,
                 "회원 장바구니 리스트 조회 성공",
+                cartResponseVoList
+        );
+    }
+
+    @GetMapping("/checkedList")
+    public CommonResponseEntity<List<CartResponseVo>> getCheckedList(
+            @RequestHeader ("Authorization") String Authorization) {
+        List<CartResponseVo> cartResponseVoList = cartService.getAllCheckedCarts(Authorization);
+
+        return new CommonResponseEntity<>(
+                HttpStatus.OK,
+                "체크된 장바구니 리스트 조회 성공(결제용)",
                 cartResponseVoList
         );
     }
