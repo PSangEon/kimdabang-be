@@ -101,5 +101,5 @@ jobs:
 
           sudo docker rm kimgane
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/kimgane
-          sudo docker run -d --name kimgane -p 10243:8000 ${{ secrets.DOCKER_USERNAME }}/kimgane
+          sudo docker run -d --name kimgane --network ubuntu_default -p 10243:8000 ${{ secrets.DOCKER_USERNAME }}/kimgane
           sudo docker image prune -f
