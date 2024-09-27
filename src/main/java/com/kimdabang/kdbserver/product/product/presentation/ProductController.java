@@ -106,7 +106,7 @@ public class ProductController {
     @GetMapping("/category/{categoryId}")
     public CommonResponseEntity<Map<String, Object>> getAllProductByCategory(
             @PathVariable Long categoryId,
-            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
         List<ProductResponseVo> products = productService.getProductsByCategory(categoryId, page, size);
