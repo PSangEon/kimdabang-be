@@ -1,6 +1,6 @@
 package com.kimdabang.kdbserver.review.review.application;
 
-import com.kimdabang.kdbserver.common.converter.PageResponseDto;
+import com.kimdabang.kdbserver.common.dto.PageResponseDto;
 import com.kimdabang.kdbserver.review.review.dto.in.ReviewRequestDto;
 import com.kimdabang.kdbserver.review.review.dto.in.ReviewUpdateRequestDto;
 import com.kimdabang.kdbserver.review.review.dto.out.ReviewResponseDto;

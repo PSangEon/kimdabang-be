@@ -1,6 +1,6 @@
 package com.kimdabang.kdbserver.product.score.application;
 
-import com.kimdabang.kdbserver.common.converter.PageResponseDto;
+import com.kimdabang.kdbserver.common.dto.PageResponseDto;
 import com.kimdabang.kdbserver.product.score.dto.ScoreResponseDto;
 
 

@@ -1,4 +1,4 @@
-package com.kimdabang.kdbserver.common.converter;
+package com.kimdabang.kdbserver.common.dto;
 
 import com.kimdabang.kdbserver.common.vo.PageResponseVo;
 import lombok.AllArgsConstructor;

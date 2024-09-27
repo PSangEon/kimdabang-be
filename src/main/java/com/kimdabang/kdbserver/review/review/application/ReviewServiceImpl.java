@@ -1,7 +1,7 @@
 package com.kimdabang.kdbserver.review.review.application;
 
 import com.kimdabang.kdbserver.auth.infrastructure.AuthRepository;
-import com.kimdabang.kdbserver.common.converter.PageResponseDto;
+import com.kimdabang.kdbserver.common.dto.PageResponseDto;
 import com.kimdabang.kdbserver.common.entity.SnowFlakeGenerator;
 import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
