@@ -14,4 +14,6 @@ public interface ReviewService {
     List<ReviewResponseDto> getUserReviewList(Date startDate, Date endDate, String authorization);
     PageResponseDto getReviewList(String productCode, int page, int size);
     void deleteReview(Long reviewCode, String authorization);
+    ReviewResponseDto getReview(Long reviewCode);
+    Boolean checkReview(Long purchaseCode, String uuid);
 }

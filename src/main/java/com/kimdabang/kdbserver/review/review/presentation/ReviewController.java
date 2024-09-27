@@ -63,7 +63,7 @@ public class ReviewController {
         );
     }
 
-    @GetMapping("/get-myreviwe")
+    @GetMapping("/get-myreview")
     public CommonResponseEntity<List<ReviewResponseVo>> getUserReviewList(
             @RequestHeader("Authorization") String authorization,
             @RequestParam(value = "start") String start, @RequestParam(value = "end") String end) throws ParseException {
@@ -83,6 +83,7 @@ public class ReviewController {
     }
     @GetMapping("/get-reviwelist")
     public CommonResponseEntity<PageResponseVo> getReviewList(
+  
             @RequestParam(value = "productCode") String productCode,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "5") int size) throws ParseException {
@@ -91,6 +92,26 @@ public class ReviewController {
                 HttpStatus.OK,
                 "상품 리뷰 리스트 조회 성공",
                 pageResponseDto.toResponseVo()
+        );
+    }
+    @GetMapping("/get-review")
+    public CommonResponseEntity<ReviewResponseVo> getReview(
+            @RequestParam(value = "reviewCode") Long reviewCode) throws ParseException {
+        ReviewResponseDto reviewResponseDto = reviewService.getReview(reviewCode);
+        return new CommonResponseEntity<>(
+                HttpStatus.OK,
+                "상품 리뷰 조회 성공",
+                reviewResponseDto.toResponseVo()
+        );
+    }
+    @GetMapping("/check-reviewavailable")
+    public CommonResponseEntity<Boolean> checkReview(
+            @RequestHeader("Authorization") String authorization,
+            @RequestParam(value = "productCode") Long purchaseCode) throws ParseException {
+        return new CommonResponseEntity<>(
+                HttpStatus.OK,
+                "리뷰 작성 가능 조회 성공",
+                reviewService.checkReview(purchaseCode, authorization)
         );
     }
 }

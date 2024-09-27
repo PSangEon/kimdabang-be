@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static com.kimdabang.kdbserver.common.exception.ErrorCode.*;
 
@@ -122,5 +123,19 @@ public class ReviewServiceImpl implements ReviewService {
         else {
             throw new CustomException(REVIWE_NOT_FOUND);
         }
+    }
+    @Override
+    public ReviewResponseDto getReview(Long reviewCode) {
+        Review review = reviewRepository.findByReviewCode(reviewCode)
+                .orElseThrow(
+                        ()->new CustomException(REVIWE_NOT_FOUND)
+                );
+            return ReviewResponseDto.toResponseDto(review);
+    }
+    @Override
+    public Boolean checkReview(Long purchaseCode, String authorization) {
+        String uuid = jwtTokenProvider.useToken(authorization);
+        Optional<Review> review = reviewRepository.findByPurchaseCodeAndUuid(purchaseCode, uuid);
+        return review.isEmpty();
     }
 }

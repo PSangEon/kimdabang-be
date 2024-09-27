@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     Optional<Review> findByReviewCode(Long reviewCode);
     Optional<Review> findByReviewCodeAndUuid(Long reviewCode, String uuid);
+    Optional<Review> findByPurchaseCodeAndUuid(Long purchaseCode, String uuid);
     List<Review> findByUuidAndCreationDateBetween(String uuid, Date startDate, Date endDate);
     Page<Review> findByProductCode(String productCode, Pageable pageable);
 }
