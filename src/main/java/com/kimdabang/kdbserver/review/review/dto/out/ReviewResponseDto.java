@@ -18,6 +18,7 @@ public class ReviewResponseDto {
     private Long reviewCode;
     private String productCode;
     private String options;
+    private String nickName;
     private Date creationDate;
     private Integer rating;
     private String text;
@@ -26,6 +27,7 @@ public class ReviewResponseDto {
         return ReviewResponseDto.builder()
                 .reviewCode(review.getReviewCode())
                 .productCode(review.getProductCode())
+                .nickName(review.getNickname())
                 .options(review.getOptions())
                 .creationDate(review.getCreationDate())
                 .rating(review.getRating())
@@ -36,6 +38,7 @@ public class ReviewResponseDto {
         return ReviewResponseVo.builder()
                 .reviewCode(reviewCode)
                 .productCode(productCode)
+                .nickName(nickName)
                 .options(options)
                 .creationDate(creationDate)
                 .rating(rating)

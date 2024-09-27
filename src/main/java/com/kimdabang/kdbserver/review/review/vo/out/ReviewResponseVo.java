@@ -12,6 +12,7 @@ import java.util.Date;
 public class ReviewResponseVo {
     private Long reviewCode;
     private String productCode;
+    private String nickName;
     private String options;
     private Date creationDate;
     private Integer rating;

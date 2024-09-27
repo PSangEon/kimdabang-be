@@ -1,6 +1,7 @@
 package com.kimdabang.kdbserver.review.review.application;
 
 import com.kimdabang.kdbserver.auth.infrastructure.AuthRepository;
+import com.kimdabang.kdbserver.common.dto.PageResponseDto;
 import com.kimdabang.kdbserver.common.entity.SnowFlakeGenerator;
 import com.kimdabang.kdbserver.common.exception.CustomException;
 import com.kimdabang.kdbserver.common.jwt.JwtTokenProvider;
@@ -15,6 +16,7 @@ import com.kimdabang.kdbserver.user.domain.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -108,17 +110,14 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
     @Override
-    public List<ReviewResponseDto> getReviewList(String productCode, int page, int size) {
+    public PageResponseDto getReviewList(String productCode, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
-        List<Review> reviewList = reviewRepository.findByProductCode(productCode, pageable);
-        if(!reviewList.isEmpty()) {
-            return reviewList.stream().map(
-                    ReviewResponseDto::toResponseDto
-            ).toList();
-        }
-        else {
-            throw new CustomException(REVIWE_NOT_FOUND);
-        }
+        Page<Review> reviewList = reviewRepository.findByProductCode(productCode, pageable);
+        log.info("reviewList:{}",reviewList);
+        List<ReviewResponseDto> reviewResponseDtoList = reviewList.stream().map(
+                    ReviewResponseDto::toResponseDto).toList();
+        return PageResponseDto.toResponseDto(
+                    page, reviewList.getTotalPages(), reviewList.hasNext(), reviewResponseDtoList);
     }
     @Override
     public ReviewResponseDto getReview(Long reviewCode) {
