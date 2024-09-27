@@ -1,6 +1,8 @@
 package com.kimdabang.kdbserver.review.review.presentation;
 
+import com.kimdabang.kdbserver.common.converter.PageResponseDto;
 import com.kimdabang.kdbserver.common.entity.CommonResponseEntity;
+import com.kimdabang.kdbserver.common.vo.PageResponseVo;
 import com.kimdabang.kdbserver.review.review.application.ReviewService;
 import com.kimdabang.kdbserver.review.review.dto.in.ReviewRequestDto;
 import com.kimdabang.kdbserver.review.review.dto.in.ReviewUpdateRequestDto;
@@ -80,17 +82,15 @@ public class ReviewController {
         );
     }
     @GetMapping("/get-reviwelist")
-    public CommonResponseEntity<List<ReviewResponseVo>> getReviewList(
+    public CommonResponseEntity<PageResponseVo> getReviewList(
             @RequestParam(value = "productCode") String productCode,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "5") int size) throws ParseException {
-        List<ReviewResponseDto> reviewResponseDtoList = reviewService.getReviewList(productCode, page, size);
+        PageResponseDto pageResponseDto = reviewService.getReviewList(productCode, page, size);
         return new CommonResponseEntity<>(
                 HttpStatus.OK,
                 "상품 리뷰 리스트 조회 성공",
-                reviewResponseDtoList.stream()
-                        .map(ReviewResponseDto::toResponseVo)
-                        .toList()
+                pageResponseDto.toResponseVo()
         );
     }
 }
