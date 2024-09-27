@@ -26,7 +26,7 @@ public class ProductScoreController {
     @GetMapping("/get-categorybest")
     public CommonResponseEntity<PageResponseVo> getCategoryBestList(
             @RequestParam(value = "categoryId") Long categoryId,
-            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size
             ) throws ParseException {
 
@@ -42,7 +42,7 @@ public class ProductScoreController {
     @Operation(summary = "BestGet API", description = "BestGet API 입니다.")
     @GetMapping("/get-best")
     public CommonResponseEntity<PageResponseVo> getBestList(
-            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size
     ) throws ParseException {
 

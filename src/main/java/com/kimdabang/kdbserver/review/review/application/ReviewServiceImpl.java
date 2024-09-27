@@ -113,16 +113,11 @@ public class ReviewServiceImpl implements ReviewService {
     public PageResponseDto getReviewList(String productCode, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
         Page<Review> reviewList = reviewRepository.findByProductCode(productCode, pageable);
-
-        if(!reviewList.isEmpty()) {
-            List<ReviewResponseDto> reviewResponseDtoList = reviewList.stream().map(
+        log.info("reviewList:{}",reviewList);
+        List<ReviewResponseDto> reviewResponseDtoList = reviewList.stream().map(
                     ReviewResponseDto::toResponseDto).toList();
-            return PageResponseDto.toResponseDto(
+        return PageResponseDto.toResponseDto(
                     page, reviewList.getTotalPages(), reviewList.hasNext(), reviewResponseDtoList);
-        }
-        else {
-            throw new CustomException(REVIWE_NOT_FOUND);
-        }
     }
     @Override
     public ReviewResponseDto getReview(Long reviewCode) {

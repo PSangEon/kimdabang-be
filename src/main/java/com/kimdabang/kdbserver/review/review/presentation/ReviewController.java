@@ -83,9 +83,8 @@ public class ReviewController {
     }
     @GetMapping("/get-reviwelist")
     public CommonResponseEntity<PageResponseVo> getReviewList(
-  
             @RequestParam(value = "productCode") String productCode,
-            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "5") int size) throws ParseException {
         PageResponseDto pageResponseDto = reviewService.getReviewList(productCode, page, size);
         return new CommonResponseEntity<>(
