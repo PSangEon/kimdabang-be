@@ -104,17 +104,17 @@
 
 - 아키텍처
 
-<img src="profile/images/architecture.png" alt="architecture" width="700" />
+<img src=".github/profile/images/architecture.png" alt="architecture" width="700" />
 
 - ERD
 
 | Original ERD |
 | --- |
-| <img src="profile/images/old_erd.png" alt="old_erd" width="700" /> |
+| <img src=".github/profile/images/old_erd.png" alt="old_erd" width="700" /> |
 
 | Architecture Rebuilding |
 | --- |
-| <img src="profile/images/new_erd.png" alt="new_erd" width="700" /> |
+| <img src=".github/profile/images/new_erd.png" alt="new_erd" width="700" /> |
 
 ---
 
@@ -122,19 +122,19 @@
 
 | 메인 페이지 | 회원가입 | 동의 |
 | --- | --- | --- |
-| <img src="profile/images/main_page.png" alt="main_page" width="300" /> | <img src="profile/images/login_page.png" alt="login_page" width="300" /> | <img src="profile/images/agreement_page.png" alt="agreement_page" width="300" /> |
+| <img src=".github/profile/images/main_page.png" alt="main_page" width="300" /> | <img src=".github/profile/images/login_page.png" alt="login_page" width="300" /> | <img src=".github/profile/images/agreement_page.png" alt="agreement_page" width="300" /> |
 
 | 마이페이지 | 검색 | 상품조회 및 좋아요 |
 | --- | --- | --- |
-| <img src="profile/images/my_page.png" alt="my_page" width="300" /> | <img src="profile/images/search_page.png" alt="search_page" width="300" /> | <img src="profile/images/favorite_page.png" alt="favorite_page" width="300" /> |
+| <img src=".github/profile/images/my_page.png" alt="my_page" width="300" /> | <img src=".github/profile/images/search_page.png" alt="search_page" width="300" /> | <img src=".github/profile/images/favorite_page.png" alt="favorite_page" width="300" /> |
 
 | 추천 | 장바구니 | 쿠폰 |
 | --- | --- | --- |
-| <img src="profile/images/best_page.png" alt="best_page" width="300" /> | <img src="profile/images/cart_page.png" alt="cart_page" width="300" /> | <img src="profile/images/coupon_page.png" alt="coupon_page" width="300" /> |
+| <img src=".github/profile/images/best_page.png" alt="best_page" width="300" /> | <img src=".github/profile/images/cart_page.png" alt="cart_page" width="300" /> | <img src=".github/profile/images/coupon_page.png" alt="coupon_page" width="300" /> |
 
 | 옵션 | 결제 | 배송 |
 | --- | --- | --- |
-| <img src="profile/images/option_page.png" alt="option_page" width="300" /> | <img src="profile/images/payment_page.png" alt="payment_page" width="300" /> | <img src="profile/images/shipment_page.png" alt="shipment_page" width="300" /> |
+| <img src=".github/profile/images/option_page.png" alt="option_page" width="300" /> | <img src=".github/profile/images/payment_page.png" alt="payment_page" width="300" /> | <img src=".github/profile/images/shipment_page.png" alt="shipment_page" width="300" /> |
 
 
 ---
